@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/src/main.css">
+  <title>장곡중 발열체크</title>
+</head>
+<body>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="id" scope="col">바코드 ID</th>
+          <th class="info" scope="col">학년/반/번호</th>
+          <th scope="col">이름</th>
+          <th scope="col">체크여부</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% data.forEach((d) => { %>
+          <tr>
+            <td class="id" scope="row"><%= d.id %></td>
+            <td class="info"><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
+            <td><%= d.name %></td>
+            <td><%= d.checked ? '네' : '아니요' %></td>
+          </tr>
+        <% }) %> 
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
