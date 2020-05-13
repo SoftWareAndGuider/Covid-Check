@@ -20,13 +20,13 @@
   <div class="container">
     <div class="status row text-center">
       <div class="col total">
-        전체: <%= data.length %>
+        등록된 전체: <%= data.length %>명
       </div>
       <div class="col checked">
-        체크완료: <%= data.filter((d) => d.checked).length %>
+        체크완료: <%= data.filter((d) => d.checked).length %>명
       </div>
       <div class="col nocheck">
-        체크안함: <%= data.filter((d) => !d.checked).length %>
+        체크안함: <%= data.filter((d) => !d.checked).length %>명
       </div>
     </div>
 
@@ -46,9 +46,9 @@
             <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
             <td><%= d.name %></td>
             <% if (d.checked) { %>
-              <td><i class="yes-icon"></i> 체크완료</td>
+              <td><i class="yes-icon"></i> 체크완료 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck('<%= d.id %>')">체크취소</button></td>
             <% } else { %> 
-              <td><i class="no-icon"></i> 체크안함</td>
+              <td><i class="no-icon"></i> 체크안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check('<%= d.id %>')">체크하기</button></td>
             <% } %> 
           </tr>
           <% }) %> 
@@ -59,13 +59,14 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        웹페이지에 문제가 발생하면 "3-3 박민혁 혹은 3-4 배재현, 임태현"을 불러주세요
+        웹페이지에 문제가 발생하면 "3-3 박민혁 혹은 3-4 배재현, 임태현"을 불러주세요 (맞춤법/오타 지적은 환영입니다)
       </div>
       <div class="alert alert-info alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다
+        모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다<br />
+        일부 디자인은 트위터에서 제작한 Bootstrap을 사용하였습니다 (MIT License), 또한 전자정부 프레임워크의 영감을 받아 제작되었습니다
       </div>
     </div>
     <script src="/src/main.js"></script>
