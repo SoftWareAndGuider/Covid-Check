@@ -74,6 +74,13 @@ function apiHandle (req, res) {
       break
     }
 
+    case 'reset': {
+      db.update({ checked: 0 }).from('checks').then(() => {
+        res.send({ success: true })
+      })
+      break
+    }
+
     default: {
       res.status(406).send('data "process" not found')
       break

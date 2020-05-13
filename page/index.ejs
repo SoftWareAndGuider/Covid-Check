@@ -12,6 +12,7 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
   <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/src/main.css">
   <title>장곡중 발열체크</title>
@@ -54,6 +55,12 @@
           <% }) %> 
         </tbody>
       </table>
+
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-info" onclick="add()">학생추가</button>
+        <button type="button" class="btn btn-danger" onclick="reset()">체크 초기화</button>
+        <button type="button" class="btn btn-warning" onclick="window.location.reload()">새로고침</button>
+      </div>
 
       <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
