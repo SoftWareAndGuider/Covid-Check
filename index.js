@@ -63,6 +63,17 @@ function apiHandle (req, res) {
       break
     }
 
+    case 'insert': {
+      if (!body.id || !body.grade || !body.class || !body.number || !body.name) return res.status(406).send('data "id || grade || class || number || name" not found')
+      db.insert(body).from('checks').then(() => {
+        db.select('*').where('id', body.id).from('checks').then((data) => {
+          if (!data) return res.send({ success: false })
+          res.send({ success: true, data })
+        })
+      }).catch((reason) => res.send({ success: false, reason }) )
+      break
+    }
+
     default: {
       res.status(406).send('data "process" not found')
       break
