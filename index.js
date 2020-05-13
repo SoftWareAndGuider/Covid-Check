@@ -21,7 +21,7 @@ app.use('/src', express.static(path() + '/src/'))
 
 app.get('/', (_, res) => res.redirect('/main'))
 app.get('/main', (_, res) => {
-  db.select('*').orderByRaw('grade, class, number').from('checks').then((data) => {
+  db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
     ejs(path() + '/page/index.ejs', { data }, (err, str) => {
       if (err) console.log(err)
       res.send(str)

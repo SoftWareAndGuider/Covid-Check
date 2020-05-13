@@ -1,0 +1,23 @@
+.stats {
+  width: 100%;
+}
+
+.yes-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: lightgreen;
+}
+
+.no-icon {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: gray;
+}
+
+input[type=search] {
+  border: 1px solid black;
+}
