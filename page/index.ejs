@@ -18,6 +18,18 @@
 </head>
 <body>
   <div class="container">
+    <div class="status row text-center">
+      <div class="col total">
+        전체: <%= data.length %>
+      </div>
+      <div class="col checked">
+        체크완료: <%= data.filter((d) => d.checked).length %>
+      </div>
+      <div class="col nocheck">
+        체크안함: <%= data.filter((d) => !d.checked).length %>
+      </div>
+    </div>
+
     <table id="table" class="table table-striped table-bordered table-sm">
       <thead>
         <tr>
@@ -33,11 +45,28 @@
             <td><%= d.id %></td>
             <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
             <td><%= d.name %></td>
-            <td><%- d.checked ? '<i class="yes-icon"></i> 체크완료' : '<i class="no-icon"></i> 체크안함' %></td>
+            <% if (d.checked) { %>
+              <td><i class="yes-icon"></i> 체크완료</td>
+            <% } else { %> 
+              <td><i class="no-icon"></i> 체크안함</td>
+            <% } %> 
           </tr>
           <% }) %> 
         </tbody>
       </table>
+
+      <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        웹페이지에 문제가 발생하면 "3-3 박민혁 혹은 3-4 배재현, 임태현"을 불러주세요
+      </div>
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다
+      </div>
     </div>
     <script src="/src/main.js"></script>
   </body>
