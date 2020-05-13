@@ -29,7 +29,8 @@ html, body {
 }
 
 input[type=search] {
-  border: 1px solid black;
+  border: none;
+  box-shadow: 0px 0px 3px 1px #000000ac;
 }
 
 .dataTables_wrapper.no-footer .dataTables_scrollBody {
