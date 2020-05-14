@@ -55,7 +55,7 @@ function apiHandle (req, res) {
     case 'uncheck': {
       if (!body.id) return res.status(406).send('data "id" not found')
       db.update({ checked: 0 }).where('id', body.id).from('checks').then(() => {
-        db.select('*').where('id', body.id).from('checks').then((data) => {
+        db.select('*').where('id', body.id).from('checks').then(([data]) => {
           if (!data) return res.send({ success: false })
           res.send({ success: true, data })
         })
@@ -66,7 +66,7 @@ function apiHandle (req, res) {
     case 'insert': {
       if (!body.id || !body.grade || !body.class || !body.number || !body.name) return res.status(406).send('data "id || grade || class || number || name" not found')
       db.insert(body).from('checks').then(() => {
-        db.select('*').where('id', body.id).from('checks').then((data) => {
+        db.select('*').where('id', body.id).from('checks').then(([data]) => {
           if (!data) return res.send({ success: false })
           res.send({ success: true, data })
         })
