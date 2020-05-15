@@ -56,7 +56,7 @@ function uncheck (id) {
 function reset () {
   swal({
     title: '잠시만요! 이 버튼은...',
-    text: '- 모든 학생들의 발열체크 여부를 전부 초기화시켜요\n- 학생들의 정보는 작업 후에도 유지되요\n- 작업을 끝나고 나서 다시 되돌릴 수 없어요\n- 발열체크를 다시 처음부터 해야할지도 몰라요!',
+    text: '- 모든 사용자의 발열체크 여부를 전부 초기화시켜요\n- 사용자의 나머지 정보들은 작업 후에도 유지되요\n- 작업을 끝나고 나서 다시 되돌릴 수 없어요\n- 발열체크를 다시 처음부터 해야할지도 몰라요!',
     icon: 'info',
     dangerMode: true,
     buttons: true,
@@ -82,6 +82,56 @@ function reset () {
 }
 
 function add () {
+  swal({
+    title: '사용자 추가',
+    text: '추가할 사용자의 구분을 선택해 주세요',
+    buttons: {
+      cancels: { text: "취소", value: null },
+      student: { text: "학생", value: 'student' },
+      teacher: { text: "선생님", value: 'teacher' }
+    }
+  }).then((res) => {
+    if (!res) return
+    switch (res) { case 'student': { addStudent(); break } case 'teacher': { addTeacher() } }
+  })
+}
+
+function addTeacher () {
+  swal({
+    text: '추가할 선생님의 바코드 ID를 입력해주세요 (취소는 ESC키)',
+    content: {
+      element: "input",
+      attributes: {
+        placeholder: "바코드 ID",
+        type: "number",
+        min: 0
+      },
+    }
+  }).then((id) => {
+    if (!id) throw null;
+    swal({
+      text: '추가할 선생님의 성명을 입력해주세요',
+      content: {
+        element: "input",
+        attributes: {
+          placeholder: "성명"
+        },
+      }
+    }).then((name) => {
+      const req = new XMLHttpRequest()
+      req.open('PUT', '/api')
+      req.setRequestHeader("Content-Type", "application/json");
+      req.send(JSON.stringify({
+        id, grade: 0, class: 0, number: 0, name, process: "insert"
+      }))
+      req.onload = () => {
+        window.location.reload()
+      }
+    })
+  })
+}
+
+function addStudent () {
   swal({
     text: '추가할 학생의 바코드 ID를 입력해주세요 (취소는 ESC키)',
     content: {

@@ -43,21 +43,30 @@
       <tbody>
         <% data.forEach((d) => { %>
           <tr>
+
             <td><%= d.id %></td>
-            <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
+
+            <% if (d.grade < 1) { %>
+              <td>선생님</td>
+            <% } else { %>
+              <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
+            <% } %>
+
             <td><%= d.name %></td>
+            
             <% if (d.checked) { %>
               <td><i class="yes-icon"></i> 체크완료 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck('<%= d.id %>')">체크취소</button></td>
             <% } else { %> 
               <td><i class="no-icon"></i> 체크안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check('<%= d.id %>')">체크하기</button></td>
             <% } %> 
+
           </tr>
-          <% }) %> 
-        </tbody>
-      </table>
+        <% }) %>
+      </tbody>
+    </table>
 
       <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="ml-0 mt-0 btn btn-info" onclick="add()">학생추가</button>
+        <button type="button" class="ml-0 mt-0 btn btn-info" onclick="add()">사용자추가</button>
         <button type="button" class="mt-0 btn btn-danger" onclick="reset()">체크 초기화</button>
         <button type="button" class="mt-0 btn btn-warning" onclick="window.location.reload()">새로고침</button>
       </div>

@@ -6,7 +6,7 @@ const { resolve: path } = require('path')
 const knex = require('knex')
 const express = require('express')
 
-const app = express()
+const app = express() 
 const db = knex({
   client: 'mysql',
   connection: {
@@ -64,7 +64,14 @@ function apiHandle (req, res) {
     }
 
     case 'insert': {
-      if (!body.id || !body.grade || !body.class || !body.number || !body.name) return res.status(406).send('data "id || grade || class || number || name" not found')
+      const ignoreFlag =
+        body.id === undefined
+          || body.grade === undefined
+          || body.class === undefined
+          || body.number === undefined
+          || body.name === undefined
+
+      if (ignoreFlag) return res.status(406).send('data "id || grade || class || number || name" not found')
       db.insert(body).from('checks').then(() => {
         db.select('*').where('id', body.id).from('checks').then(([data]) => {
           if (!data) return res.send({ success: false })
