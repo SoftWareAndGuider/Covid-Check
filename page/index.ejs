@@ -18,6 +18,14 @@
   <title>장곡중 발열체크</title>
 </head>
 <body>
+  <div class="loading">
+    <div class="jumbotron text-center">
+      <h3>Loading...</h3>
+      <h4>잠시만 기다려 주세요...</h4>
+      <s>돈이 없어서 서버가 느리기 때문에...</s>
+    </div>
+  </div>
+
   <div class="container">
     <div class="status row text-center">
       <div class="col total">
@@ -47,7 +55,7 @@
             <td><%= d.id %></td>
 
             <% if (d.grade < 1) { %>
-              <td>선생님</td>
+              <td>선생님 #<%= d.number %></td>
             <% } else { %>
               <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
             <% } %>
@@ -75,14 +83,15 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        웹페이지에 문제가 발생하면 "3-3 박민혁"을 불러주세요 (맞춤법/오타 지적은 환영입니다)
+        웹페이지에 문제가 발생하면 "3-3 박민혁"을 불러주세요 (맞춤법/오타 지적은 환영입니다)<br />
+        이 웹 페이지에서 해결할 수 없는 문제(정보오류)가 발생하면 "3-3 박민혁 혹은 3-4 임태현, 배재현"을 불러주세요
       </div>
       <div class="alert alert-info alert-dismissible fade show mt-1" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
         모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다<br />
-        일부 디자인은 트위터에서 제작한 Bootstrap을 사용하였습니다 (MIT License), 또한 전자정부 프레임워크의 영감을 받아 제작되었습니다
+        일부 디자인은 트위터에서 제작한 Bootstrap을 사용하였습니다 (MIT License), 또한 전자정부 프레임워크를 참고하여 제작되었습니다
       </div>
     </div>
     <script src="/src/main.js"></script>

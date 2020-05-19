@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 .container {
@@ -47,4 +48,12 @@ input[type=search] {
 
 .nocheck {
   border-bottom: 5px solid gray;
+}
+
+.loading {
+  display: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
 }

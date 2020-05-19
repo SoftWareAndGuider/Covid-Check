@@ -12,6 +12,11 @@ $(document).ready(function () {
     },
     "search": {
       "search": localStorage.getItem('search') || ""
+    },
+    "initComplete": () => {
+      document.getElementsByClassName('loading')[0].style.display = 'none'
+      document.getElementsByTagName('html')[0].style.overflow = 'auto'
+      document.getElementsByTagName('body')[0].style.overflow = 'auto'
     }
   });
   $('.dataTables_length').addClass('bs-select');
