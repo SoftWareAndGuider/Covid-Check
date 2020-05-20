@@ -30,6 +30,44 @@ app.get('/main', (_, res) => {
   })
 })
 
+app.get('/compact', (_, res) => {
+  db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
+    ejs(path() + '/page/compact.ejs', { data }, (err, str) => {
+      if (err) console.log(err)
+      res.send(str)
+    })
+  })
+})
+
+app.get('/ajax/data', (_, res) => {
+  db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
+    const rData = []
+    data.forEach((v) => {
+      const rrData = []
+
+      rrData[0] = v.id
+      rrData[2] = v.name
+
+      if (v.grade < 1) {
+        rrData[1] = '선생님 #' + v.number
+      } else {
+        rrData[1] = v.grade + '학년 ' + v.class + '반 ' + v.number + '번'
+      }
+
+      if (v.checked) {
+        rrData[3] = '<i class="yes-icon"></i> 체크완료 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck(\''+ v.id + '\')">체크취소</button>'
+      } else if (!v.checked) {
+        rrData[3] = '<i class="no-icon"></i> 체크안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check(\'' + v.id + '\')">체크하기</button>'
+      } else {
+        rrData[3] = 'ERROR: Data Not Found'
+      }
+      rData.push(rrData)
+    })
+
+    res.send({ data: rData })
+  })
+})
+
 app.put('/api', apiHandle)
 app.put('/api/v1', apiHandle)
 

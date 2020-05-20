@@ -49,27 +49,6 @@
         </tr>
       </thead>
       <tbody>
-        <% data.forEach((d) => { %>
-          <tr>
-
-            <td><%= d.id %></td>
-
-            <% if (d.grade < 1) { %>
-              <td>선생님 #<%= d.number %></td>
-            <% } else { %>
-              <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
-            <% } %>
-
-            <td><%= d.name %></td>
-            
-            <% if (d.checked) { %>
-              <td><i class="yes-icon"></i> 체크완료 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck('<%= d.id %>')">체크취소</button></td>
-            <% } else { %> 
-              <td><i class="no-icon"></i> 체크안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check('<%= d.id %>')">체크하기</button></td>
-            <% } %> 
-
-          </tr>
-        <% }) %>
       </tbody>
     </table>
 
