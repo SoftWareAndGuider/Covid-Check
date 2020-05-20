@@ -51,9 +51,8 @@ app.get('/ajax/data', (_, res) => {
       if (v.grade < 1) {
         rrData[1] = '선생님 #' + v.number
       } else {
-        rrData[1] = v.grade + '학년 ' + v.class + '반 ' + v.number + '번'
+        rrData[1] = v.grade + '학년 ' + v.class + '반 ' + v.number + '번 <span class="d-none">' + v.grade + v.class.toString().padStart(2, '0') + v.number.toString().padStart(2, '0') + '</span>'
       }
-
       if (v.checked) {
         rrData[3] = '<i class="yes-icon"></i> 체크완료 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck(\''+ v.id + '\')">체크취소</button>'
       } else if (!v.checked) {
