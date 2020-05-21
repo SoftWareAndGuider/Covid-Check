@@ -98,6 +98,13 @@ function apiHandle (req, res) {
       break
     }
 
+    case 'delete': {
+      db.delete().where(body).from('checks').then(() => {
+        res.send({ success: true })
+      }).catch((reason) => res.send({ success: false, reason }))
+      break
+    }
+
     case 'insert': {
       const ignoreFlag =
         body.id === undefined
