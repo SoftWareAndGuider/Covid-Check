@@ -1,11 +1,15 @@
+@font-face { font-family: 'LotteMartHappy'; font-style: normal; font-weight: 400; src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff'); } @font-face { font-family: 'LotteMartHappy'; font-style: normal; font-weight: 700; src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff') format('woff'); } .lottemarthappy * { font-family: 'LotteMartHappy', sans-serif; } 
+@font-face { font-family: 'S-CoreDream-8Heavy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff') format('woff'); font-weight: normal; font-style: normal; } 
+
 html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
+  font-family: 'S-CoreDream-8Heavy';
 }
 
 .container {
-  padding: 10px 0px;
+  padding: 10px 10px;
 }
 
 .status {
@@ -30,6 +34,7 @@ html, body {
 }
 
 input[type=search] {
+  border-radius: 5px;
   border: none;
   box-shadow: 0px 0px 3px 1px #000000ac;
 }
@@ -51,9 +56,12 @@ input[type=search] {
 }
 
 .loading {
-  display: absolute;
+  display: flex;
   top: 0px;
   left: 0px;
   width: 100vw;
   height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-family: 'LotteMartHappy';
 }

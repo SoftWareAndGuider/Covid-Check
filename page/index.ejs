@@ -17,26 +17,42 @@
   <link rel="stylesheet" href="/src/main.css">
   <title>장곡중 발열체크</title>
 </head>
-<body>
+<body onload="getStatus()">
   <div class="loading">
     <div class="jumbotron text-center">
-      <h3>Loading...</h3>
-      <h4>잠시만 기다려 주세요...</h4>
-      <s>돈이 없어서 서버가 느리기 때문에...</s>
+      <div class="spinner-grow text-info" style="width: 10rem; height: 10rem;" role="status">
+    </div><br>
+    <h4>서버에서 정보를 가지고 오고 있습니다<br>잠시만 기다려 주세요...</h4>
     </div>
   </div>
 
   <div class="container">
     <div class="status row text-center">
-      <div class="col total">
-        등록된 전체: <%= data.length %>명
+      <div class="col-lg-3 text-white bg-dark text-center hvr-icon-up">
+          <h1><i class="fas fa-users"></i></h1>
+          <h5 class="card-title">전채 사용자 수</h5>
+          <h6 class="card-title"><%= data.length %>명 등록됨</h6>
       </div>
-      <div class="col checked">
-        체크완료: <%= data.filter((d) => d.checked).length %>명
+      <div class="col-lg-3 text-white text-center hvr-icon-up" style="background-color: #e43e3e;">
+        <h1><i class="fas fa-user-times"></i></h1>
+        <h5 class="card-title">검사가 필요한 사용자 수</h5>
+        <h6 class="card-title"><%= data.filter((d) => !d.checked).length %>명 등록됨</h6>
       </div>
-      <div class="col nocheck">
-        체크안함: <%= data.filter((d) => !d.checked).length %>명
+      <div class="col-lg-3 text-white text-center hvr-icon-up" style="background-color: #42e265;">
+        <h1><i class="fas fa-user-check"></i></h1>
+        <h5 class="card-title">검사가 완료된 사용자 수</h5>
+        <h6 class="card-title"><%= data.filter((d) => d.checked).length %>명 등록됨</h6>
       </div>
+      <div class="col-lg-3 text-white text-center hvr-icon-up" style="background-color: #c446cf;">
+        <h1><i class="fas fa-user-cog"></i></h1>
+        <h5 class="card-title">검사 비율</h5>
+        <h6 class="card-title">검사필요:<%= Math.round(data.filter((d) => !d.checked).length / data.length * 100) %>% / 검사완료:<%= Math.round(data.filter((d) => d.checked).length / data.length * 100) %>%</h6>
+      </div>
+    </div>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="ml-0 mt-0 btn btn-info" onclick="add()">사용자추가</button>
+      <button type="button" class="mt-0 btn btn-danger" onclick="reset()">체크 초기화</button>
+      <button type="button" class="mt-0 btn btn-warning" onclick="window.location.reload()">새로고침</button>
     </div>
 
     <table id="table" class="table table-striped table-bordered table-sm">
@@ -52,11 +68,7 @@
       </tbody>
     </table>
 
-      <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="button" class="ml-0 mt-0 btn btn-info" onclick="add()">사용자추가</button>
-        <button type="button" class="mt-0 btn btn-danger" onclick="reset()">체크 초기화</button>
-        <button type="button" class="mt-0 btn btn-warning" onclick="window.location.reload()">새로고침</button>
-      </div>
+      
 
       <div class="alert alert-warning alert-dismissible fade show mt-1" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
