@@ -75,13 +75,13 @@ app.put('/api/v1', apiHandle)
  * @param {import('express').Response} res
  */
 function apiHandle (req, res) {
-  const { process, ...body } = req.body
+  const { process, multi, ...body } = req.body
   if (!process) return res.status(406).send('data "process" not found')
   switch (process) {
     case 'info': {
       db.select('*').where(body).from('checks').then((data) => {
         if (!data) return res.send({ success: false })
-        if (body.multi) return res.send({ success: true, data: data })
+        if (multi) return res.send({ success: true, data: data })
         res.send({ success: true, data: data[0] })
       })
       break
