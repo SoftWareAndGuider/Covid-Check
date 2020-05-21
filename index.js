@@ -79,9 +79,10 @@ function apiHandle (req, res) {
   if (!process) return res.status(406).send('data "process" not found')
   switch (process) {
     case 'info': {
-      db.select('*').where(body).from('checks').then(([data]) => {
+      db.select('*').where(body).from('checks').then((data) => {
         if (!data) return res.send({ success: false })
-        res.send({ success: true, data })
+        if (body.multi) return res.send({ success: true, data: data })
+        res.send({ success: true, data: data[0] })
       })
       break
     }
