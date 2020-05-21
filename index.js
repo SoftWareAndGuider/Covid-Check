@@ -83,6 +83,7 @@ function apiHandle (req, res) {
         if (!data) return res.send({ success: false })
         res.send({ success: true, data })
       })
+      break
     }
 
     case 'check': {
