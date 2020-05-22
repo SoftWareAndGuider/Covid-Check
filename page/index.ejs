@@ -23,7 +23,7 @@
       <div class="spinner-grow text-info" role="status"></div>
       <br />
       <h4>
-        서버에서 정보를 가지고 오고 있습니다<br />
+        서버에서 데이터 파싱중입니다<br />
         잠시만 기다려 주세요...
       </h4>
     </div>
@@ -42,26 +42,25 @@
         <h1><i class="fas fa-user-times"></i></h1>
         <h5 class="card-title">미검사자</h5>
         <h6 class="card-title">
-          <%= data.filter((d) => !d.checked).length %>명 필요
+          <%= data.filter((d) => !d.checked).length %>명 검사 필요 (<%= Math.round(data.filter((d) => !d.checked).length / data.length * 100) %>%)
         </h6>
       </div>
       <div class="col-lg-3 text-white text-center hvr-icon-up status-item status-complete">
         <h1><i class="fas fa-user-check"></i></h1>
         <h5 class="card-title">검사 완료자</h5>
         <h6 class="card-title">
-          <%= data.filter((d) => d.checked).length %>명 완료
+          <%= data.filter((d) => d.checked).length %>명 검사 완료 (<%= Math.round(data.filter((d) => d.checked).length / data.length * 100) %>%)
         </h6>
       </div>
-      <div class="col-lg-3 text-white text-center hvr-icon-up status-item status-percent">
+      <div class="col-lg-3 text-white text-center hvr-icon-up status-item status-danger">
         <h1><i class="fas fa-user-cog"></i></h1>
-        <h5 class="card-title">검사 비율</h5>
+        <h5 class="card-title">발열 확인됨</h5>
         <h6 class="card-title">
-          검사필요: <%= Math.round(data.filter((d) => !d.checked).length / data.length * 100) %>% /
-          검사완료: <%= Math.round(data.filter((d) => d.checked).length / data.length * 100) %>%
+          <%= data.filter((d) => d.checked === 2).length %>
         </h6>
       </div>
     </div>
-    <div class="card progress-card">
+    <div class="card progress-card" style="background-color: #7ed0ff;">
       <div class="card-body progress-card-body">
         <% const grade0 = Math.round(data.filter((d) => d.grade === 0 && d.checked).length / data.length * 100) %>
         <% const grade1 = Math.round(data.filter((d) => d.grade === 1 && d.checked).length / data.length * 100) %>
@@ -80,7 +79,6 @@
     <table id="table" class="table table-striped table-bordered table-sm">
       <thead>
         <tr>
-          <th class="th-sm">바코드 ID</th>
           <th class="th-sm">학년/반/번호</th>
           <th class="th-sm">이름</th>
           <th class="th-sm">체크여부</th>

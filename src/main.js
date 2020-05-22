@@ -1,3 +1,7 @@
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  window.location.replace('/mobile')
+}
+
 $(document).ready(function () {
   $('#table').DataTable({
     "scrollY": "50vh",
@@ -8,13 +12,7 @@ $(document).ready(function () {
     "processing": true,
     "ordering": false,
     "info": false,
-    "language": {
-      "search": "검색: ",
-      "searchPlaceholder": 'ex) 3학년 3반 체크안함'
-    },
-    "search": {
-      "search": localStorage.getItem('search') || ""
-    },
+    searching: false,
     "initComplete": () => {
       document.getElementsByClassName('loading')[0].style.display = 'none'
       document.getElementsByTagName('html')[0].style.overflow = 'auto'
@@ -36,12 +34,12 @@ $(document).ready(function () {
   })
 });
 
-function check (id) {
+function check (id, ondo) {
   const req = new XMLHttpRequest()
   req.open('PUT', '/api')
   req.setRequestHeader("Content-Type", "application/json");
   req.send(JSON.stringify({
-    id, process: "check"
+    id, process: "check", ondo
   }))
   req.onload = () =>{
     window.location.reload()
