@@ -1,9 +1,11 @@
+let grade, classs, table
+
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   window.location.replace('/mobile')
 }
 
 $(document).ready(function () {
-  $('#table').DataTable({
+  table = $('#table').DataTable({
     "scrollY": "50vh",
     paging: false,
     order: [[ 1, 'asc' ], [ 0, 'asc' ]],
@@ -17,22 +19,32 @@ $(document).ready(function () {
       document.getElementsByClassName('loading')[0].style.display = 'none'
       document.getElementsByTagName('html')[0].style.overflow = 'auto'
       document.getElementsByTagName('body')[0].style.overflow = 'auto'
+      document.getElementsByClassName('dataTables_scrollBody')[0].scroll(0, localStorage.getItem('scroll') || 0)
     }
   });
   $('.dataTables_length').addClass('bs-select');
   $(".alert").alert();
-  document.querySelector("input[type=search]").addEventListener("input", () => {
-    localStorage.setItem("search", document.querySelector("input[type=search]").value)
-  })
   setTimeout(() => {
     window.location.reload()
   }, 60000)
 
-  document.getElementsByClassName('dataTables_scrollBody')[0].scroll(0, localStorage.getItem('scroll') || 0)
   document.getElementsByClassName('dataTables_scrollBody')[0].addEventListener('scroll', () => {
     localStorage.setItem('scroll', document.getElementsByClassName('dataTables_scrollBody')[0].scrollTop)
   })
 });
+
+function gradeSelect (n) {
+  grade = n
+}
+
+function classSelect (n) {
+  classs = n
+}
+
+function filter () {
+  console.log(grade, classs)
+  table.search(grade + '학년 ' + classs + '반').draw()
+}
 
 function check (id, ondo) {
   const req = new XMLHttpRequest()

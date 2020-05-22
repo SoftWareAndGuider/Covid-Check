@@ -44,7 +44,7 @@ html, body {
 }
 
 .status-danger {
-  background-color: red;
+  background-color: #ff5757;
 }
 
 .progress-card {
@@ -95,6 +95,10 @@ html, body {
 
 .nocheck {
   border-bottom: 5px solid gray;
+}
+
+.toolbar {
+  margin-left: 10px;
 }
 
 .loading {

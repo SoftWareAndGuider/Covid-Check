@@ -76,6 +76,30 @@
       </div>
     </div>
 
+    <div class="row">
+      <div class="dropdown toolbar">
+        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          학년 선택
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <button class="dropdown-item" onclick="gradeSelect(1)">1학년</a>
+          <button class="dropdown-item" onclick="gradeSelect(2)">2학년</a>
+          <button class="dropdown-item" onclick="gradeSelect(3)">3학년</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          반 선택
+        </a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <% for (let i = 1; i < 13; i++) { %>
+            <button class="dropdown-item" onclick="classSelect(<%= i %>)"> <%= i.toString().padStart(2, '0') %>반</a>
+          <% } %>
+        </div>
+      </div>
+      <button type="button" class="btn btn-info" onclick="filter()">조회</button>
+    </div>
+
     <table id="table" class="table table-striped table-bordered table-sm">
       <thead>
         <tr>
