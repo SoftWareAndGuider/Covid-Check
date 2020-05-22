@@ -10,9 +10,8 @@ const app = express()
 const db = knex({
   client: 'mysql',
   connection: {
-    host: 'localhost',
-    user: 'covidcheck',
-    password: 'covidcheck1234',
+    host: 'direct.trinets.xyz',
+    user: 'guest',
     database: 'covidcheck'
   }
 })
@@ -27,6 +26,13 @@ app.get('/main', (_, res) => {
       if (err) console.log(err)
       res.send(str)
     })
+  })
+})
+
+app.get('/alert', (req, res) => {
+  ejs(path() + '/page/ieSuck.ejs', (err, str) => {
+    if (err) console.log(err)
+    res.send(str)
   })
 })
 
