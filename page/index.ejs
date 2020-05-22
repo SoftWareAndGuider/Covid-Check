@@ -15,7 +15,19 @@
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/src/main.css">
-  <title>장곡중 발열체크</title>
+  <title>장곡중학교 발열체크</title>
+
+  <script>
+    function isIE() {
+      const ua = navigator.userAgent;
+      /* MSIE used to detect old browsers and Trident used to newer ones*/
+      const is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+      
+      return is_ie; 
+    }
+    if (isIE()) window.location.replace('/Alert')
+  </script>
+  
 </head>
 <body>
   <div class="loading">

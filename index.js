@@ -10,8 +10,9 @@ const app = express()
 const db = knex({
   client: 'mysql',
   connection: {
-    host: 'direct.trinets.xyz',
-    user: 'guest',
+    host: 'covid.xyz',
+    user: 'covid',
+    pw: 'covid1234'
     database: 'covidcheck'
   }
 })
