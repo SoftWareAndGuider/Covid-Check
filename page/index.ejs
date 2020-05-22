@@ -17,38 +17,66 @@
   <link rel="stylesheet" href="/src/main.css">
   <title>장곡중 발열체크</title>
 </head>
-<body onload="getStatus()">
+<body>
   <div class="loading">
     <div class="jumbotron text-center">
-      <div class="spinner-grow text-info" style="width: 10rem; height: 10rem;" role="status">
-    </div><br>
-    <h4>서버에서 정보를 가지고 오고 있습니다<br>잠시만 기다려 주세요...</h4>
+      <div class="spinner-grow text-info" role="status"></div>
+      <br />
+      <h4>
+        서버에서 정보를 가지고 오고 있습니다<br />
+        잠시만 기다려 주세요...
+      </h4>
     </div>
   </div>
 
   <div class="container">
     <div class="status row text-center">
-      <div class="col-lg-3 text-white bg-dark text-center hvr-icon-up">
+      <div class="col-lg-3 text-white text-center hvr-icon-up status-item status-all">
           <h1><i class="fas fa-users"></i></h1>
           <h5 class="card-title">전채 사용자 수</h5>
-          <h6 class="card-title"><%= data.length %>명 등록됨</h6>
+          <h6 class="card-title">
+            <%= data.length %>명 등록됨
+          </h6>
       </div>
-      <div class="col-lg-3 text-white text-center hvr-icon-up" style="background-color: #e43e3e;">
+      <div class="col-lg-3 text-white text-center hvr-icon-up status-item status-need">
         <h1><i class="fas fa-user-times"></i></h1>
         <h5 class="card-title">검사가 필요한 사용자 수</h5>
-        <h6 class="card-title"><%= data.filter((d) => !d.checked).length %>명 등록됨</h6>
+        <h6 class="card-title">
+          <%= data.filter((d) => !d.checked).length %>명 필요
+        </h6>
       </div>
-      <div class="col-lg-3 text-white text-center hvr-icon-up" style="background-color: #42e265;">
+      <div class="col-lg-3 text-white text-center hvr-icon-up status-item status-complete">
         <h1><i class="fas fa-user-check"></i></h1>
         <h5 class="card-title">검사가 완료된 사용자 수</h5>
-        <h6 class="card-title"><%= data.filter((d) => d.checked).length %>명 등록됨</h6>
+        <h6 class="card-title">
+          <%= data.filter((d) => d.checked).length %>명 완료
+        </h6>
       </div>
-      <div class="col-lg-3 text-white text-center hvr-icon-up" style="background-color: #c446cf;">
+      <div class="col-lg-3 text-white text-center hvr-icon-up status-item status-percent">
         <h1><i class="fas fa-user-cog"></i></h1>
         <h5 class="card-title">검사 비율</h5>
-        <h6 class="card-title">검사필요:<%= Math.round(data.filter((d) => !d.checked).length / data.length * 100) %>% / 검사완료:<%= Math.round(data.filter((d) => d.checked).length / data.length * 100) %>%</h6>
+        <h6 class="card-title">
+          검사필요: <%= Math.round(data.filter((d) => !d.checked).length / data.length * 100) %>% /
+          검사완료: <%= Math.round(data.filter((d) => d.checked).length / data.length * 100) %>%
+        </h6>
       </div>
     </div>
+    <div class="card progress-card">
+      <div class="card-body progress-card-body">
+        <% const grade0 = Math.round(data.filter((d) => d.grade === 0 && d.checked).length / data.length * 100) %>
+        <% const grade1 = Math.round(data.filter((d) => d.grade === 1 && d.checked).length / data.length * 100) %>
+        <% const grade2 = Math.round(data.filter((d) => d.grade === 2 && d.checked).length / data.length * 100) %>
+        <% const grade3 = Math.round(data.filter((d) => d.grade === 3 && d.checked).length / data.length * 100) %>
+
+        <div class="progress">
+          <div class="progress-bar bg-secondary" role="progressbar" style="color: white; width: <%= grade0 %>%"><%= grade0 %>%</div>
+          <div class="progress-bar bg-success" role="progressbar" style="color: white; width: <%= grade1 %>%"><%= grade1 %>%</div>
+          <div class="progress-bar bg-danger" role="progressbar" style="color: white; width: <%= grade2 %>%"><%= grade2 %>%</div>
+          <div class="progress-bar bg-warning" role="progressbar" style="color: white; width: <%= grade3 %>%"><%= grade3 %>%</div>
+        </div>
+      </div>
+    </div>
+    
     <div class="btn-group" role="group" aria-label="Basic example">
       <button type="button" class="ml-0 mt-0 btn btn-info" onclick="add()">사용자추가</button>
       <button type="button" class="mt-0 btn btn-danger" onclick="reset()">체크 초기화</button>
@@ -67,8 +95,6 @@
       <tbody>
       </tbody>
     </table>
-
-      
 
       <div class="alert alert-warning alert-dismissible fade show mt-1" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

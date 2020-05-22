@@ -1,20 +1,60 @@
-@font-face { font-family: 'LotteMartHappy'; font-style: normal; font-weight: 400; src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff'); } @font-face { font-family: 'LotteMartHappy'; font-style: normal; font-weight: 700; src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff') format('woff'); } .lottemarthappy * { font-family: 'LotteMartHappy', sans-serif; } 
-@font-face { font-family: 'S-CoreDream-8Heavy'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff') format('woff'); font-weight: normal; font-style: normal; } 
+@font-face { font-family: 'LotteMartHappy'; font-style: normal; font-weight: 400; src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff'); }
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 
 html, body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  font-family: 'S-CoreDream-8Heavy';
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+.card-title {
+  font-weight: bold;
 }
 
 .container {
   padding: 10px 10px;
 }
 
+.spinner-grow {
+  width: 10rem;
+  height: 10rem;
+}
+
 .status {
   width: 100%;
-  margin-bottom: 10px;
+  margin: 0px;
+}
+
+.status-item {
+  padding: 10px;
+  padding-bottom: 0px;
+}
+
+.status-all {
+  background-color: lightcoral;
+}
+
+.status-need {
+  background-color: gray;
+}
+
+.status-complete {
+  background-color: #4fcf4f;
+}
+
+.status-percent {
+  background-color: lightskyblue;
+}
+
+.progress-card {
+  box-shadow: none;
+  margin: 5px;
+  padding: 0px;
+}
+
+.progress-card-body {
+  padding: 0px;
 }
 
 .yes-icon {
