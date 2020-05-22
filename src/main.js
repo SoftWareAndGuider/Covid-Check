@@ -31,7 +31,7 @@ $(document).ready(function () {
   }, 60000)
 
   document.getElementsByClassName('dataTables_scrollBody')[0].scroll(0, localStorage.getItem('scroll') || 0)
-  document.getElementsByClassName('dataTables_scrollBody')[0].addEventListener('scroll', (ev) => {
+  document.getElementsByClassName('dataTables_scrollBody')[0].addEventListener('scroll', () => {
     localStorage.setItem('scroll', document.getElementsByClassName('dataTables_scrollBody')[0].scrollTop)
   })
 });

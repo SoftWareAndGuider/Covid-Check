@@ -88,6 +88,15 @@ function apiHandle (req, res) {
     }
 
     case 'check': {
+      if (ondo) {
+        db.update({ checked: 2 }).where(body).from('checks').then(() => {
+          db.select('*').where(body).from('checks').then(([data]) => {
+            if (!data) return res.send({ success: false })
+            res.send({ success: true, data: data })
+          })
+        })
+        break
+      }
       db.update({ checked: 1 }).where(body).from('checks').then(() => {
         db.select('*').where(body).from('checks').then(([data]) => {
           if (!data) return res.send({ success: false })
@@ -96,42 +105,6 @@ function apiHandle (req, res) {
       })
       break
     }
-
-    case 'uncheck': {
-      db.update({ checked: 0 }).where(body).from('checks').then(() => {
-        db.select('*').where(body).from('checks').then(([data]) => {
-          if (!data) return res.send({ success: false })
-          res.send({ success: true, data })
-        })
-      })
-      break
-    }
-
-    case 'delete': {
-      db.delete().where(body).from('checks').then(() => {
-        res.send({ success: true })
-      }).catch((reason) => res.send({ success: false, reason }))
-      break
-    }
-
-    case 'insert': {
-      const ignoreFlag =
-        body.id === undefined
-          || body.grade === undefined
-          || body.class === undefined
-          || body.number === undefined
-          || body.name === undefined
-
-      if (ignoreFlag) return res.status(406).send('data "id || grade || class || number || name" not found')
-      db.insert(body).from('checks').then(() => {
-        db.select('*').where('id', body.id).from('checks').then(([data]) => {
-          if (!data) return res.send({ success: false })
-          res.send({ success: true, data })
-        })
-      }).catch((reason) => res.send({ success: false, reason }) )
-      break
-    }
-
     case 'reset': {
       db.update({ checked: 0 }).from('checks').then(() => {
         res.send({ success: true })
