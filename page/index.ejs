@@ -27,7 +27,24 @@
   </script>
  </head>
  <body>
-  <div class="loading">
+  <div class="modal fade" id="tablesize" tabindex="-1" role="dialog">
+
+    <!-- Change class .modal-sm to change the size of the modal -->
+    <div class="modal-dialog modal-fluid h-100 p-5 m-0 w-100 mw-100">
+      <div class="modal-content h-100 w-100">
+        <div class="modal-header">
+          <h4 class="modal-title w-100" id="myModalLabel">확대 / 조회</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <embed class="w-100 h-100" src="/legacy">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="loading">
     <div class="loading-jumbo jumbotron text-center">
       <div class="spinner-grow text-info" role="status"></div>
       <br />
@@ -35,7 +52,7 @@
         서버에서 데이터를 가져오고있습니다. 잠시만 기다려주세요
       </h4>
     </div>
-  </div>
+  </div> -->
   <div class="container">
     <div class="main-content" id="panel">
       <div class="header peach-gradient pb-5">
@@ -141,39 +158,83 @@
                 <% const grade2 = Math.round(data.filter((d) => d.grade === 2 && d.checked).length / data.length * 100) %>
                 <% const grade3 = Math.round(data.filter((d) => d.grade === 3 && d.checked).length / data.length * 100) %>
                 <div class="progress"style="height: 15px;"">
-                  <div class="progress-bar bg-info" role="progressbar" style="color: black; width: <%= grade0 %>%"><%= grade0 %>%</div>
-                  <div class="progress-bar bg-success" role="progressbar" style="color: white; width: <%= grade1 %>%"><%= grade1 %>%</div>
-                  <div class="progress-bar bg-danger" role="progressbar" style="color: white; width: <%= grade2 %>%"><%= grade2 %>%</div>
-                  <div class="progress-bar bg-warning" role="progressbar" style="color: white; width: <%= grade3 %>%"><%= grade3 %>%</div>
+                  <div class="progress-bar bg-info" role="progressbar" data-toggle="tooltip" data-placement="top" title="전체 인원중 <%= grade0 %>%의 선생님분들이 검사를 완료하셨습니다" style="color: black; width: <%= grade0 %>%"><%= grade0 %>%</div>
+                  <div class="progress-bar success-color-dark" role="progressbar" data-toggle="tooltip" data-placement="top" title="전체 인원중 <%= grade1 %>%의 1학년들이 검사를 완료했습니다"  style="color: white; width: <%= grade1 %>%"><%= grade1 %>%</div>
+                  <div class="progress-bar danger-color-dark" role="progressbar" data-toggle="tooltip" data-placement="top" title="전체 인원중 <%= grade2 %>%의 2학년들이 검사를완료했습니다" style="color: white; width: <%= grade2 %>%"><%= grade2 %>%</div>
+                  <div class="progress-bar warning-color" role="progressbar" data-toggle="tooltip" data-placement="top" title="전체 인원중 <%= grade3 %>%의 3학년들이 검사를 완료했습니다" style="color: white; width: <%= grade3 %>%"><%= grade3 %>%</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-xl-8">
-            <div class="card">
+            <div class="card fulltarget">
               <div class="card-header border-0">
                 <div class="row align-items-center">
                   <div class="col">
                     <h3 class="mb-0">전체 리스트</h3>
                   </div>
                   <div class="col text-right">
-                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tablesize">
-                      확대 / 조회
-                    </button>
+                    <form action="/main" method="get">
+                      <div class="input-group">
+                        <select name="grade" id="grade" class="browser-default custom-select">
+                          <option value="-1">전체</option>
+                          <option value="0">선생님</option>
+                          <option value="1">1학년</option>
+                          <option value="2">2학년</option>
+                          <option value="3">2학년</option>
+                        </select>
+                        <select name="class" id="class" class="browser-default custom-select">
+                          <option value="-1">전체</option>
+                          <% for (let i = 1; i < 13; i++) { %>
+                            <option value="<%= i %>"><%= i %>반</option>
+                          <% } %>
+                        </select>
+                        <div class="input-group-append">
+                          <button class="btn btn-md primary-color text-white m-0 px-3 py-2 z-depth-0 waves-effect" type="submit" id="inputGroupFileAddon04">조회</button>
+                          <button class="btn btn-md info-color text-white m-0 px-3 py-2 z-depth-0 waves-effect" type="button" onclick="fullscreen()">확대 / 축소</button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
-              <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead>
+                  <tr>
+                    <th class="th-sm">학년/반/번호</th>
+                    <th class="th-sm">이름</th>
+                    <th class="th-sm">체크여부</th>
+                  </tr>
+                </thead>
+              </table>
+              <div id="scrollTrack" class="table-responsive table-ss">
                <table id="table" class="table align-items-center table-flush">
-                 <thead>
-                   <tr>
-                     <th class="th-sm">학년/반/번호</th>
-                     <th class="th-sm">이름</th>
-                     <th class="th-sm">체크여부</th>
-                   </tr>
-                 </thead>
                  <tbody>
-                 </tbody>
+                  <% rdata = data %> 
+                  <% if (-1 < query.grade) rdata = rdata.filter((d) => d.grade == query.grade) %> 
+                  <% if (-1 < query.class) rdata = rdata.filter((d) => d.class == query.class) %> 
+                  <% if (-1 < query.number) rdata = rdata.filter((d) => d.number == query.number) %> 
+                  <% if (-1 < query.checked) rdata = rdata.filter((d) => d.checked == query.checked) %> 
+                  <% rdata.forEach((d) => { %>
+                    <tr>
+                      <% if (d.grade < 1) { %>
+                        <td>선생님 #<%= d.number %></td>
+                      <% } else { %>
+                        <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
+                      <% } %>
+                      <td><%= d.name %></td>
+                      <td>
+                        <% if (d.checked === 1) { %>
+                          <i class="fas fa-check-circle text-success"></i> 체크 완료 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck('<%= d.id %>')">체크 취소</button>
+                        <% } else if (d.checked === 0) { %>
+                          <i class="far fa-circle"></i> 체크 안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check('<%= d.id %>')">체크 하기</button>  <button class="m-0 ml-2 p-1 btn btn-danger" onclick="check('<%= d.id %>', true)">발열자로 체크하기</button>
+                        <% } else if (d.checked === 2) { %>
+                          <i class="fas fa-exclamation-circle text-danger"></i> 발열 확인 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck('<%= d.id %>')">체크 취소</button>
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
                </table>
               </div>
             </div>
@@ -189,44 +250,44 @@
               </div>
               <div class="card-body">
                <h3><strong>선생님</strong></h3>
-               <h4>전체 : <%= data.filter((d) => d.grade === 0).length %>명<br />
-                검사 완료 : <%= data.filter((d) => d.grade === 0 && d.checked).length %>명<br />
+               <h4>전체 / 검사 완료: <%= data.filter((d) => d.grade === 0).length %>명 / <%= data.filter((d) => d.grade === 0 && d.checked).length %>명<br />
                 정상 / 발열 :  <%= data.filter((d) => d.grade === 0 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 0 && d.checked === 2).length %>명
                </h4>
               </div>
               <div class="card-body">
                 <h3><strong>1학년</strong></h3>
-                <h4>전체 : <%= data.filter((d) => d.grade === 1).length %>명<br />
-                 검사 완료 : <%= data.filter((d) => d.grade === 1 && d.checked).length %>명<br />
+                <h4>전체 / 검사 완료 : <%= data.filter((d) => d.grade === 1).length %>명 / <%= data.filter((d) => d.grade === 1 && d.checked).length %>명<br />
                  정상 / 발열 :  <%= data.filter((d) => d.grade === 1 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 1 && d.checked === 2).length %>명
                 </h4>
                </div>
                <div class="card-body">
                 <h3><strong>2학년</strong></h3>
-                <h4>전체 : <%= data.filter((d) => d.grade === 2).length %>명<br />
-                 검사 완료 : <%= data.filter((d) => d.grade === 2 && d.checked).length %>명<br />
+                <h4>전체 / 검사 완료 : <%= data.filter((d) => d.grade === 2).length %>명 / <%= data.filter((d) => d.grade === 2 && d.checked).length %>명<br />
                  정상 / 발열 :  <%= data.filter((d) => d.grade === 2 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 2 && d.checked === 2).length %>명
                 </h4>
                </div>
                <div class="card-body">
                 <h3><strong>3학년</strong></h3>
-                <h4>전체 : <%= data.filter((d) => d.grade === 3).length %>명<br />
-                 검사 완료 : <%= data.filter((d) => d.grade === 3 && d.checked).length %>명<br />
+                <h4>전체 / 검사 완료 : <%= data.filter((d) => d.grade === 3).length %>명 / <%= data.filter((d) => d.grade === 3 && d.checked).length %>명<br />
                  정상 / 발열 :  <%= data.filter((d) => d.grade === 3 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 3 && d.checked === 2).length %>명
                 </h4>
                </div>
             </div>
           </div>
         </div>
+
         <!-- Footer -->
         <footer class="footer pt-0">
-          <div class="row align-items-center justify-content-lg-between">
-            <div class="col-lg-7">
-              <div class="copyright text-center  text-lg-left  text-muted">
-                &copy; 모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다<br /><br />
-                웹페이지에 문제가 발생하면 "3-3 박민혁 혹은 3-4 임태현"을 불러주세요 (맞춤법/오타 지적은 환영입니다)<br />
-                이 웹 페이지에서 해결할 수 없는 문제(정보오류)가 발생하면 "3-3 박민혁 혹은 3-4 임태현, 배재현"을 불러주세요 
-              </div>
+          <div class=" align-items-center justify-content-lg-between">
+            <div class="copyright text-muted">
+              웹페이지에 문제가 발생하면 "3-3 박민혁 혹은 3-4 임태현"을 불러주세요 (맞춤법/오타 지적은 환영입니다)<br />
+              이 웹 페이지에서 해결할 수 없는 문제(정보오류)가 발생하면 "3-3 박민혁 혹은 3-4 임태현, 배재현"을 불러주세요<br /><br />
+
+              &copy; 모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다<br /><br />
+
+              <span data-toggle="tooltip" data-placement="top" title="서버 구축 부분">서버 메인 프로그래밍</span>: 3-3 박민혁<br />
+              <span data-toggle="tooltip" data-placement="top" title="웹 디자인 부분">서버 서브 프로그래밍</span>: 3-4 임태현<br />
+              <span data-toggle="tooltip" data-placement="top" title="측정 및 관리자 부분">클라이언트 메인 프로그래밍</span>: 3-4 배재현<br />
             </div>
           </div>
         </footer>
@@ -236,4 +297,3 @@
   <script src="/src/main.js"></script>
  </body>
 </html>
- 

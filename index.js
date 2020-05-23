@@ -10,9 +10,9 @@ const app = express()
 const db = knex({
   client: 'mysql',
   connection: {
-    host: 'covid.xyz',
-    user: 'covid',
-    pw: 'covid1234'
+    host: 'localhost',
+    user: 'covidcheck',
+    password: 'covidcheck1234',
     database: 'covidcheck'
   }
 })
@@ -21,9 +21,9 @@ app.use('/api', express.json({ limit: '500K' }))
 app.use('/src', express.static(path() + '/src/'))
 
 app.get('/', (_, res) => res.redirect('/main'))
-app.get('/main', (_, res) => {
+app.get('/main', (req, res) => {
   db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
-    ejs(path() + '/page/index.ejs', { data }, (err, str) => {
+    ejs(path() + '/page/index.ejs', { data, query: req.query || {} }, (err, str) => {
       if (err) console.log(err)
       res.send(str)
     })

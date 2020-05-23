@@ -29830,5 +29830,19 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
 }
 
 html, body {
-    overflow: hidden;
+    /* overflow: hidden; */
+}
+
+.table-ss {
+    height: 48vh;
+    overflow: auto;
+}
+
+.fullon { 
+    z-index: 9999; 
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
 }
