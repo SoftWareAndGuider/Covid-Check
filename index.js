@@ -60,11 +60,11 @@ app.get('/ajax/data', (_, res) => {
         rrData[0] = v.grade + '학년 ' + v.class + '반 ' + v.number + '번 <span class="d-none">' + v.grade + v.class.toString().padStart(2, '0') + v.number.toString().padStart(2, '0') + '</span>'
       }
       if (v.checked === 1) {
-        rrData[2] = '<i class="yes-icon"></i> 체크완료 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck(\''+ v.id + '\')">체크취소</button>'
+        rrData[2] = '<i class="fas fa-check-circle"></i> 체크 완료 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck(\''+ v.id + '\')">체크 취소</button>'
       } else if (v.checked === 0) {
-        rrData[2] = '<i class="no-icon"></i> 체크안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check(\'' + v.id + '\')">체크하기</button>  <button class="m-0 ml-2 p-1 btn btn-danger" onclick="check(\'' + v.id + '\', true)">발열 확인됨</button>'
+        rrData[2] = '<i class="far fa-circle"></i> 체크 안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check(\'' + v.id + '\')">체크 하기</button>  <button class="m-0 ml-2 p-1 btn btn-danger" onclick="check(\'' + v.id + '\', true)">발열 확인됨</button>'
       } else if (v.checked === 2) {
-        rrData[2] = '<i class="danger-icon"></i> 발열 확인됨 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck(\''+ v.id + '\')">체크취소</button>'
+        rrData[2] = '<i class="far fa-check-circle"></i> 발열 확인 <button class="m-0 ml-2 p-1 btn btn-secondary" onclick="uncheck(\''+ v.id + '\')">체크 취소</button>'
       }
       rData.push(rrData)
     })
