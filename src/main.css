@@ -26144,7 +26144,6 @@ table.dataTable tbody > tr.selected
 {
     display: inline-block;
     float: right; 
-
     padding-right: 1.5rem;
 }
 
@@ -29820,4 +29819,16 @@ input.datetimepicker[data-color='yellow'] + .bootstrap-datetimepicker-widget.dro
 .bootstrap-datetimepicker-widget.dropdown-black table td .btn[data-action='togglePeriod']
 {
     background: transparent;
+}
+
+.loading {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background-color: #000000ac;
+}
+
+html, body {
+    overflow: hidden;
 }

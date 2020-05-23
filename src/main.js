@@ -1,8 +1,13 @@
 let grade, classs, table
 
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  window.location.replace('/mobile')
+
+function isIE() {
+  const ua = navigator.userAgent;
+  const is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+  return is_ie; 
 }
+
+if (isIE()) window.location.replace('/Alert')
 
 $(document).ready(function () {
   table = $('#table').DataTable({
@@ -15,6 +20,10 @@ $(document).ready(function () {
     "ordering": false,
     "info": false,
     searching: false,
+    responsive: true,
+    rowReorder: {
+        selector: 'td:nth-child(2)'
+    },
     "initComplete": () => {
       document.getElementsByClassName('loading')[0].style.display = 'none'
       document.getElementsByTagName('html')[0].style.overflow = 'auto'
@@ -27,22 +36,22 @@ $(document).ready(function () {
   setTimeout(() => {
     window.location.reload()
   }, 60000)
-
   document.getElementsByClassName('dataTables_scrollBody')[0].addEventListener('scroll', () => {
     localStorage.setItem('scroll', document.getElementsByClassName('dataTables_scrollBody')[0].scrollTop)
   })
 });
 
 function gradeSelect (n) {
+  document.getElementById('gradeSelect').innerText = n + '학년'
   grade = n
 }
 
 function classSelect (n) {
+  document.getElementById('classSelect').innerText = n + '반'
   classs = n
 }
 
 function filter () {
-  console.log(grade, classs)
   table.search(grade + '학년 ' + classs + '반').draw()
 }
 

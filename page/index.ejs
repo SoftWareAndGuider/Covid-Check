@@ -1,6 +1,5 @@
- <!DOCTYPE html>
- <html>
- 
+<!DOCTYPE html>
+<html>
  <head>
    <meta charset="utf-8">
    <title>장곡중학교 발열체크</title>
@@ -19,18 +18,17 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="/src/main.css">
    <script>
-     function isIE() {
-       const ua = navigator.userAgent;
-       const is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
-       return is_ie; 
-     }
-     if (isIE()) window.location.replace('/Alert')
-   </script>
+    function isIE() {
+      const ua = navigator.userAgent;
+      const is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
+      return is_ie; 
+    }
+    if (isIE()) window.location.replace('/alert')
+  </script>
  </head>
- 
  <body>
   <div class="loading">
-    <div class="jumbotron text-center">
+    <div class="loading-jumbo jumbotron text-center">
       <div class="spinner-grow text-info" role="status"></div>
       <br />
       <h4>
@@ -38,193 +36,204 @@
       </h4>
     </div>
   </div>
-   <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
-     <div class="scrollbar-inner">
-       <div class="navbar-inner">
-         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
-           <h6 class="navbar-heading p-0 text-muted">
-             <span class="docs-normal">학년 선택</span>
-           </h6>
-           <ul class="navbar-nav mb-md-3">
-             <li class="nav-item">
-               <a class="nav-link" href="" target="_blank">
-                 <i class="ni ni-spaceship"></i>
-                 <span class="nav-link-text">선생님</span>
-               </a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="" target="_blank">
-                 <i class="ni ni-palette"></i>
-                 <span class="nav-link-text">1학년</span>
-               </a>
-             </li>
-             <li class="nav-item">
-               <a class="nav-link" href="" target="_blank">
-                 <i class="ni ni-palette"></i>
-                 <span class="nav-link-text">2학년</span>
-               </a>
-             </li>
-             <li class="nav-item">
-              <a class="nav-link" href="" target="_blank">
-                <i class="ni ni-palette"></i>
-                <span class="nav-link-text">3학년</span>
-              </a>
-            </li>
-           </ul>
-         </div>
-       </div>
-     </div>
-   </nav>
-   <div class="main-content" id="panel">
-    <div class="main">
-     <div class="header bg-primary pb-6">
-       <div class="container-fluid">
-         <div class="header-body">
-           <div class="row align-items-center py-4">
-             <div class="col-lg-6 col-7">
-               <form class="navbar-search navbar-search-light form-inline mr-sm-3" id="navbar-search-main">
-                 <div class="form-group mb-0">
-                   <h1>장곡중학교 발열 체크</h1>
-                 </div>
-               </form>
-             </div>
-             <div class="col-lg-6 col-5 text-right">
-               <a href="#" class="btn btn-sm btn-neutral">새로고침</a>
-             </div>
-           </div>
-           <div class="row">
-             <div class="col-xl-3 col-md-6">
-               <div class="card card-stats">
-                 <div class="card-body">
-                   <div class="row">
-                     <div class="col">
-                       <h5 class="card-title text-uppercase text-muted mb-0">발열 검사 대상자</h5>
-                       <span class="h3 font-weight-bold mb-0"><%= data.length %>명 등록됨</span>
-                     </div>
-                     <div class="col-auto">
-                       <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
-                        <i class="fas fa-users"></i>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
+  <div class="container">
+    <div class="main-content" id="panel">
+      <div class="header peach-gradient pb-5">
+        <div class="container-fluid">
+          <div class="header-body">
+            <div class="row align-items-center py-4">
+              <div class="col-lg-6 col-7">
+                <h1 class="text-white">장곡중학교 발열 체크</h1>
+              </div>
+              <div class="col-lg-6 col-5 text-right">
+                <a href="/simple" class="btn text-white">구버전</a>
+                <button onclick="window.location.reload()" class="btn text-white">새로고침</button>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-xl-3 col-md-6">
+                <div class="card card-stats">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">발열 검사 대상자</h5>
+                        <span class="h4 font-weight-bold mb-0"><%= data.length %>명 등록됨</span>
+                      </div>
+                      <div class="col-auto">
+                        <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                         <i class="fas fa-users"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-6">
+                <div class="card card-stats">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">미검사자</h5>
+                        <span class="h4 font-weight-bold mb-0">
+                          <%= data.filter((d) => !d.checked).length %>명
+                          (<%= Math.round(data.filter((d) => !d.checked).length / data.length * 100) %>%)
+                        </span>
+                      </div>
+                      <div class="col-auto">
+                        <div class="icon icon-shape bg-gradient-gray text-white rounded-circle shadow">
+                         <i class="fas fa-user-times"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-6">
+                <div class="card card-stats">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">검사 완료자</h5>
+                        <span class="h4 font-weight-bold mb-0">
+                          <%= data.filter((d) => d.checked).length %>명
+                          (<%= Math.round(data.filter((d) => d.checked).length / data.length * 100) %>%)
+                        </span>
+                      </div>
+                      <div class="col-auto">
+                        <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                         <i class="fas fa-user-check"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-md-6">
+                <div class="card card-stats">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">발열 확인됨</h5>
+                        <span class="h4 font-weight-bold mb-0">
+                          <%= data.filter((d) => d.checked === 2).length %>명
+                        </span>
+                      </div>
+                      <div class="col-auto">
+                        <div class="icon icon-shape bg-gradient-danger text-white rounded-circle shadow">
+                         <i class="fas fa-user-cog"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid mt--6">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="card">
+              <div class="card-header border-0"style="height: 55px;">
+                <% const grade0 = Math.round(data.filter((d) => d.grade === 0 && d.checked).length / data.length * 100) %>
+                <% const grade1 = Math.round(data.filter((d) => d.grade === 1 && d.checked).length / data.length * 100) %>
+                <% const grade2 = Math.round(data.filter((d) => d.grade === 2 && d.checked).length / data.length * 100) %>
+                <% const grade3 = Math.round(data.filter((d) => d.grade === 3 && d.checked).length / data.length * 100) %>
+                <div class="progress"style="height: 15px;"">
+                  <div class="progress-bar bg-info" role="progressbar" style="color: black; width: <%= grade0 %>%"><%= grade0 %>%</div>
+                  <div class="progress-bar bg-success" role="progressbar" style="color: white; width: <%= grade1 %>%"><%= grade1 %>%</div>
+                  <div class="progress-bar bg-danger" role="progressbar" style="color: white; width: <%= grade2 %>%"><%= grade2 %>%</div>
+                  <div class="progress-bar bg-warning" role="progressbar" style="color: white; width: <%= grade3 %>%"><%= grade3 %>%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-8">
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h3 class="mb-0">전체 리스트</h3>
+                  </div>
+                  <div class="col text-right">
+                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#tablesize">
+                      확대 / 조회
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="table-responsive">
+               <table id="table" class="table align-items-center table-flush">
+                 <thead>
+                   <tr>
+                     <th class="th-sm">학년/반/번호</th>
+                     <th class="th-sm">이름</th>
+                     <th class="th-sm">체크여부</th>
+                   </tr>
+                 </thead>
+                 <tbody>
+                 </tbody>
+               </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-4">
+            <div class="card">
+              <div class="card-header bg-transparent">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <h5 class="h3 mb-0">학년별 보기</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+               <h3><strong>선생님</strong></h3>
+               <h4>전체 : <%= data.filter((d) => d.grade === 0).length %>명<br />
+                검사 완료 : <%= data.filter((d) => d.grade === 0 && d.checked).length %>명<br />
+                정상 / 발열 :  <%= data.filter((d) => d.grade === 0 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 0 && d.checked === 2).length %>명
+               </h4>
+              </div>
+              <div class="card-body">
+                <h3><strong>1학년</strong></h3>
+                <h4>전체 : <%= data.filter((d) => d.grade === 1).length %>명<br />
+                 검사 완료 : <%= data.filter((d) => d.grade === 1 && d.checked).length %>명<br />
+                 정상 / 발열 :  <%= data.filter((d) => d.grade === 1 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 1 && d.checked === 2).length %>명
+                </h4>
                </div>
-             </div>
-             <div class="col-xl-3 col-md-6">
-               <div class="card card-stats">
-                 <div class="card-body">
-                   <div class="row">
-                     <div class="col">
-                       <h5 class="card-title text-uppercase text-muted mb-0">미검사자</h5>
-                       <span class="h4 font-weight-bold mb-0"> <%= data.filter((d) => !d.checked).length %>명 검사 필요 (<%= Math.round(data.filter((d) => !d.checked).length / data.length * 100) %>%)</span>
-                     </div>
-                     <div class="col-auto">
-                       <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
-                        <i class="fas fa-user-times"></i>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
+               <div class="card-body">
+                <h3><strong>2학년</strong></h3>
+                <h4>전체 : <%= data.filter((d) => d.grade === 2).length %>명<br />
+                 검사 완료 : <%= data.filter((d) => d.grade === 2 && d.checked).length %>명<br />
+                 정상 / 발열 :  <%= data.filter((d) => d.grade === 2 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 2 && d.checked === 2).length %>명
+                </h4>
                </div>
-             </div>
-             <div class="col-xl-3 col-md-6">
-               <div class="card card-stats">
-                 <div class="card-body">
-                   <div class="row">
-                     <div class="col">
-                       <h5 class="card-title text-uppercase text-muted mb-0">검사 완료자</h5>
-                       <span class="h4 font-weight-bold mb-0"><%= data.filter((d) => d.checked).length %>명 검사 완료 (<%= Math.round(data.filter((d) => d.checked).length / data.length * 100) %>%)</span>
-                     </div>
-                     <div class="col-auto">
-                       <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
-                        <i class="fas fa-user-check"></i>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
+               <div class="card-body">
+                <h3><strong>3학년</strong></h3>
+                <h4>전체 : <%= data.filter((d) => d.grade === 3).length %>명<br />
+                 검사 완료 : <%= data.filter((d) => d.grade === 3 && d.checked).length %>명<br />
+                 정상 / 발열 :  <%= data.filter((d) => d.grade === 3 && d.checked === 1).length %>명 / <%= data.filter((d) => d.grade === 3 && d.checked === 2).length %>명
+                </h4>
                </div>
-             </div>
-             <div class="col-xl-3 col-md-6">
-               <div class="card card-stats">
-                 <div class="card-body">
-                   <div class="row">
-                     <div class="col">
-                       <h5 class="card-title text-uppercase text-muted mb-0">발열 확인됨</h5><span class="h2 font-weight-bold mb-0"><%= data.filter((d) => d.checked === 2).length %></span>
-                     </div>
-                     <div class="col-auto">
-                       <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
-                        <i class="fas fa-user-cog"></i>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </div>
-       </div>
-     </div>
-     <div class="container-fluid mt--6">
-       <div class="row">
-         <div class="col-xl-8">
-           <div class="card">
-             <div class="card-header border-0">
-               <div class="row align-items-center">
-                 <div class="col">
-                   <h3 class="mb-0">전체 리스트</h3>
-                 </div>
-                 <div class="col text-right">
-                   <a href="" class="btn btn-sm btn-primary">확대</a>
-                 </div>
-               </div>
-             </div>
-             <div class="table-responsive">
-              <table id="table" class="table align-items-center table-flush">
-                <thead>
-                  <tr>
-                    <th class="th-sm">학년/반/번호</th>
-                    <th class="th-sm">이름</th>
-                    <th class="th-sm">체크여부</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
-             </div>
-           </div>
-         </div>
-         <div class="col-xl-4">
-           <div class="card">
-             <div class="card-header bg-transparent">
-               <div class="row align-items-center">
-                 <div class="col">
-                   <h5 class="h3 mb-0">학년별 보기</h5>
-                 </div>
-               </div>
-             </div>
-             <div class="card-body">
-              <div class="search">asdf</div>
-               선생님<br />총 <%= data.filter((d) => d.grade === 0).length %>명, 검사 완료 <%= data.filter((d) => d.grade === 0 && d.checked).length %>명<br />발열 <%= data.filter((d) => d.grade === 0 && d.checked === 2).length %>명, 정상 <%= data.filter((d) => d.grade === 0 && d.checked === 1).length %>명
-             </div>
-           </div>
-         </div>
-       </div>
-       <!-- Footer -->
-       <footer class="footer pt-0">
-         <div class="row align-items-center justify-content-lg-between">
-           <div class="col-lg-7">
-             <div class="copyright text-center  text-lg-left  text-muted">
-               &copy; 모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다<br /><br />
-               웹페이지에 문제가 발생하면 "3-4 임태현"을 불러주세요 (맞춤법/오타 지적은 환영입니다)
-               이 웹 페이지에서 해결할 수 없는 문제(정보오류)가 발생하면 "3-3 박민혁 혹은 3-4 임태현, 배재현"을 불러주세요 
-             </div>
-           </div>
-         </div>
-       </footer>
-     </div>
-   </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer -->
+        <footer class="footer pt-0">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-7">
+              <div class="copyright text-center  text-lg-left  text-muted">
+                &copy; 모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다<br /><br />
+                웹페이지에 문제가 발생하면 "3-3 박민혁 혹은 3-4 임태현"을 불러주세요 (맞춤법/오타 지적은 환영입니다)<br />
+                이 웹 페이지에서 해결할 수 없는 문제(정보오류)가 발생하면 "3-3 박민혁 혹은 3-4 임태현, 배재현"을 불러주세요 
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
   </div>
-   <script src="/src/main.js"></script>
+  <script src="/src/main.js"></script>
  </body>
- </html>
+</html>
  
