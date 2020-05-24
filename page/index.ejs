@@ -9,13 +9,12 @@
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
-   
    <script src="https://kit.fontawesome.com/1213a7cbad.js" crossorigin="anonymous"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/table2csv@1.1.4/src/table2csv.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
    <link rel="stylesheet" href="/src/main.css">
    <script>
     function isIE() {
@@ -28,30 +27,31 @@
   <% if (query.export == 1) { %>
     <script>
       window.onload = () => {
-        exportTableToCsv('table', '장곡중-발열체크-조회결과.csv')
-        let params = (new URL(document.location)).searchParams;
-        params.delete('export')
-        window.location.replace('/main?' + params.toString())
+        exportTableToCsv('table', '장곡중-발열체크-조회결과', () => {
+          let params = (new URL(document.location)).searchParams;
+          params.delete('export')
+          window.location.replace('/main?' + params.toString())
+        })
       }
     </script>
   <% } %>
  </head>
  <body>
-  <!-- <div class="modal fade" id="tablesize" tabindex="-1" role="dialog">
+  <div class="modal fade" id="history" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-fluid h-100 p-5 m-0 w-100 mw-100">
       <div class="modal-content h-100 w-100">
         <div class="modal-header">
-          <h4 class="modal-title w-100" id="myModalLabel">확대 / 조회</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h4 class="modal-title w-100" id="myModalLabel">기록</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="admin = false">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <embed class="w-100 h-100" src="/legacy">
+          <embed class="w-100 h-100" src="/history">
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
   <!-- <div class="loading">
     <div class="loading-jumbo jumbotron text-center">
       <div class="spinner-grow text-info" role="status"></div>
@@ -61,6 +61,25 @@
       </h4>
     </div>
   </div> -->
+  <!-- Frame Modal Bottom -->
+  <div class="modal fade top" id="frameModalBottom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
+
+    <!-- Add class .modal-frame and then add class .modal-bottom (or other classes from list above) to set a position to the modal -->
+    <div class="modal-dialog modal-frame modal-top" role="document">
+
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row d-flex justify-content-center align-items-center">
+            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="reset()">발열정보 초기화</button>
+            <button type="button" class="btn btn-info" data-dismiss="modal" onclick="add()">사용자 추가</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#history">과거 기록</button>
+            <button type="button" class="btn btn-secondary text-white" data-dismiss="modal" onclick="admin = false">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Frame Modal Bottom -->
   <div class="container">
     <div class="main-content" id="panel">
       <div class="header peach-gradient pb-5">
@@ -71,8 +90,8 @@
                 <h1 class="text-white">장곡중학교 발열 체크</h1>
               </div>
               <div class="col-lg-6 col-5 text-right">
-                <!-- <a href="/simple" class="btn text-white">구버전</a> -->
-                <button onclick="window.location.reload()" class="btn text-white">새로고침 <span class="refresh">60</span></button>
+                <button class="btn text-white" data-toggle="modal" data-target="#frameModalBottom" onclick="admin = true">관리자</button>
+                <button onclick="window.location.reload()" class="btn text-white" id="refresh">새로고침 <span class="refresh">60</span></button>
               </div>
             </div>
             <div class="row mb-3">
@@ -162,7 +181,7 @@
             <div class="card fulltarget">
               <div class="card-header border-0">
                 <div class="row align-items-center">
-                  <div class="col-sm">
+                  <div class="col-md">
                     <h3 class="mb-0">전체 리스트</h3>
                   </div>
                   <div class="col-md-8 text-right">

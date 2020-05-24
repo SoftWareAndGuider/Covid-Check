@@ -1,5 +1,6 @@
 const port = process.env.CvCheckPort || 11111
 
+const { writeFile: save, mkdirSync: init, existsSync: exist } = require('fs')
 const { renderFile: ejs } = require('ejs')
 const { resolve: path } = require('path')
 
@@ -17,10 +18,12 @@ const db = knex({
   }
 })
 
+if (!exist(path() + '/saves')) init(path() + '/saves')
 
 // Handling
 app.use('/api', express.json({ limit: '500K' }))
 app.use('/src', express.static(path() + '/src/')) 
+app.use('/saves', express.static(path() + '/saves/'))
 
 app.get('/', (_, res) => res.redirect('/main'))
 app.get('/alert', (_, res) => res.sendFile(path() + '/etc/ieSuck.html'))
@@ -38,6 +41,14 @@ app.get('/main', (req, res) => {
   })
 })
 
+app.get('/history', (_, res) => {
+  db.select('*').orderBy('savedAt', 'desc').from('saves').then((data) => {
+    ejs(path() + '/page/history.ejs', { data }, (err, str) => {
+      if (err) console.log(err)
+      res.send(str)
+    })
+  })
+})
 
 /**
  * API
@@ -114,8 +125,10 @@ function apiHandle (req, res) {
     }
 
     case 'reset': {
-      db.update({ checked: 0 }).from('checks').then(() => {
-        res.send({ success: true })
+      saveTable(() => {
+        db.update({ checked: 0 }).from('checks').then(() => {
+          res.send({ success: true })
+        })
       })
       break
     }
@@ -125,6 +138,45 @@ function apiHandle (req, res) {
       break
     }
   }
+}
+
+let resetProtect = false
+setInterval(() => {
+  let now = new Date()
+  if (now.getHours === 0 && now.getMinutes === 0 && now.getSeconds === 0) {
+    if (resetProtect) return
+    resetProtect = true
+    setTimeout(() => { resetProtect = false }, 3000)
+    saveTable(() => {
+      db.update({ checked: 0 }).from('checks').then(() => {
+        res.send({ success: true })
+      })
+    })
+  }
+}, 500)
+
+function saveTable (cb) {
+  const filename = '장곡중-발열체크-기록-' + new Date().toLocaleString('ko-KR').split(' ').join('-').split('/').join('.') + '.csv'
+  let rendered = '학년,반,번호,이름,체크여부'
+  db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
+    data.forEach((d) => {
+      rendered += '\n'
+      if (d.grade < 1) {
+        rendered += '선생님,-,' + d.number + ','
+      } else {
+        rendered += d.grade + ',' + d.class + ',' + d.number + ','
+      }
+
+      rendered += d.name + ','
+
+      const ments = ['체크 안함', '체크 완료', '발열 확인됨']
+      rendered += ments[d.checked]
+    })
+    save(path() + '/saves/' + filename, rendered, (err) => {
+      if (err) console.log(err)
+      db.insert({ filename }).from('saves').then(cb)
+    })
+  })
 }
 
 // 404

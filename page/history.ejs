@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
+</head>
+<body>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="text-right">저장일시</th>
+        <th>다운로드</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach((d) => { %>
+        <tr>
+          <td class="text-right"><%= new Date(d.savedAt).toLocaleString('ko-KR') %></td>
+          <td><a class="btn" href="/saves/<%= d.filename %>"><%= d.filename %></a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
