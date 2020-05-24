@@ -10,8 +10,8 @@ const app = express()
 const db = knex({
   client: 'mysql',
   connection: {
-    host: 'direct.trinets.xyz',
-    user: 'guest',
+    host: 'localhost',
+    user: 'covidcheck',
     database: 'covidcheck'
   }
 })
@@ -86,9 +86,11 @@ function apiHandle (req, res) {
     }
 
     case 'delete': {
-      db.delete().where(body).from('checks').then(() => {
-        res.send({ success: true })
-      }).catch((reason) => res.send({ success: false, reason }))
+      db.select('*').where(body).from('checks').then((data) => {
+        db.delete().where(body).from('checks').then(() => {
+          res.send({ success: true, data })
+        }).catch((reason) => res.send({ success: false, reason }))
+      })
       break
     }
 

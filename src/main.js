@@ -10,7 +10,6 @@ function isIE() {
 if (isIE()) window.location.replace('/Alert')
 
 $(document).ready(function () {
-  // $('[data-toggle="tooltip"]').tooltip()
   // table = $('#table').DataTable({
   //   scrollY: '50vh',
   //   paging: false,
@@ -32,7 +31,8 @@ $(document).ready(function () {
   //     document.getElementsByClassName('dataTables_scrollBody')[0].scroll(0, localStorage.getItem('scroll') || 0)
   //   }
   // })
-  
+        
+  $('[data-toggle="tooltip"]').tooltip()
   $('.dataTables_length').addClass('bs-select')
   $('.alert').alert()
   
