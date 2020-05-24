@@ -10,17 +10,24 @@ const app = express()
 const db = knex({
   client: 'mysql',
   connection: {
-    host: 'localhost',
-    user: 'covidcheck',
-    password: 'covidcheck1234',
+    host: 'direct.trinets.xyz',
+    user: 'guest',
     database: 'covidcheck'
   }
 })
 
-app.use('/api', express.json({ limit: '500K' }))
-app.use('/src', express.static(path() + '/src/'))
+
+// Handling
+app.use('/api', express.json({ limit: '500K' })) // 클라에서 데이터를 받을 수 있게
+app.use('/src', express.static(path() + '/src/')) 
 
 app.get('/', (_, res) => res.redirect('/main'))
+app.get('/alert', (_, res) => res.sendFile(path() + '/etc/ieSuck.html'))
+app.put('/api', apiHandle)
+app.put('/api/v1', apiHandle)
+
+
+// Page
 app.get('/main', (req, res) => {
   db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
     ejs(path() + '/page/index.ejs', { data, query: req.query || {} }, (err, str) => {
@@ -30,62 +37,9 @@ app.get('/main', (req, res) => {
   })
 })
 
-app.get('/simple', (_, res) => {
-  db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
-    ejs(path() + '/page/simple.ejs', { data }, (err, str) => {
-      if (err) console.log(err)
-      res.send(str)
-    })
-  })
-})
-
-app.get('/legacy', (req, res) => {
-  db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
-    ejs(path() + '/page/legacy.ejs', { data, query: req.query || {} }, (err, str) => {
-      if (err) console.log(err)
-      res.send(str)
-    })
-  })
-})
-
-app.get('/alert', (req, res) => {
-  ejs(path() + '/page/ieSuck.ejs', (err, str) => {
-    if (err) console.log(err)
-    res.send(str)
-  })
-})
-
-app.get('/ajax/data', (_, res) => {
-  db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
-    const rData = []
-    data.forEach((v) => {
-      const rrData = []
-
-      rrData[1] = v.name
-
-      if (v.grade < 1) {
-        rrData[0] = '선생님 #' + v.number
-      } else {
-        rrData[0] = v.grade + '학년 ' + v.class + '반 ' + v.number + '번 <span class="d-none">' + v.grade + v.class.toString().padStart(2, '0') + v.number.toString().padStart(2, '0') + '</span>'
-      }
-      if (v.checked === 1) {
-        rrData[2] = '<i class="fas fa-check-circle text-success"></i> 체크 완료 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck(\''+ v.id + '\')">체크 취소</button>'
-      } else if (v.checked === 0) {
-        rrData[2] = '<i class="far fa-circle"></i> 체크 안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check(\'' + v.id + '\')">체크 하기</button>  <button class="m-0 ml-2 p-1 btn btn-danger" onclick="check(\'' + v.id + '\', true)">발열자로 체크하기</button>'
-      } else if (v.checked === 2) {
-        rrData[2] = '<i class="fas fa-exclamation-circle text-danger"></i> 발열 확인 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck(\''+ v.id + '\')">체크 취소</button>'
-      }
-      rData.push(rrData)
-    })
-
-    res.send({ data: rData })
-  })
-})
-
-app.put('/api', apiHandle)
-app.put('/api/v1', apiHandle)
 
 /**
+ * API
  * @param {import('express').Request} req
  * @param {import('express').Response} res
  */
@@ -170,6 +124,10 @@ function apiHandle (req, res) {
   }
 }
 
+// 404
+app.use((_, res) => res.sendFile(path() + '/etc/404.html'))
+
+// listen
 app.listen(port, () => {
   console.log('Server is now on http://localhost:' + port)
 })

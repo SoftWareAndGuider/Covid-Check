@@ -2,20 +2,19 @@
 <html>
  <head>
    <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
    <title>장곡중학교 발열체크</title>
-   <link rel="icon" href="assets/img/brand/favicon.png" type="image/png">
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
+   
+   <script src="https://kit.fontawesome.com/1213a7cbad.js" crossorigin="anonymous"></script>
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/js/mdb.min.js"></script>
-   <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-   <link rel="stylesheet" href="//cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="/src/main.css">
    <script>
     function isIE() {
@@ -27,9 +26,7 @@
   </script>
  </head>
  <body>
-  <div class="modal fade" id="tablesize" tabindex="-1" role="dialog">
-
-    <!-- Change class .modal-sm to change the size of the modal -->
+  <!-- <div class="modal fade" id="tablesize" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-fluid h-100 p-5 m-0 w-100 mw-100">
       <div class="modal-content h-100 w-100">
         <div class="modal-header">
@@ -43,7 +40,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- <div class="loading">
     <div class="loading-jumbo jumbotron text-center">
       <div class="spinner-grow text-info" role="status"></div>
@@ -63,8 +60,8 @@
                 <h1 class="text-white">장곡중학교 발열 체크</h1>
               </div>
               <div class="col-lg-6 col-5 text-right">
-                <a href="/simple" class="btn text-white">구버전</a>
-                <button onclick="window.location.reload()" class="btn text-white">새로고침</button>
+                <!-- <a href="/simple" class="btn text-white">구버전</a> -->
+                <button onclick="window.location.reload()" class="btn text-white">새로고침 <span class="refresh">60</span></button>
               </div>
             </div>
             <div class="row mb-3">
@@ -170,10 +167,10 @@
             <div class="card fulltarget">
               <div class="card-header border-0">
                 <div class="row align-items-center">
-                  <div class="col">
+                  <div class="col-sm">
                     <h3 class="mb-0">전체 리스트</h3>
                   </div>
-                  <div class="col text-right">
+                  <div class="col-sm text-right">
                     <form action="/main" method="get">
                       <div class="input-group">
                         <select name="grade" id="grade" class="browser-default custom-select">
@@ -190,7 +187,7 @@
                           <% } %>
                         </select>
                         <div class="input-group-append">
-                          <button class="btn btn-md primary-color text-white m-0 px-3 py-2 z-depth-0 waves-effect" type="submit" id="inputGroupFileAddon04">조회</button>
+                          <button class="btn btn-md primary-color text-white m-0 px-3 py-2 z-depth-0 waves-effect" type="submit">조회</button>
                           <button class="btn btn-md info-color text-white m-0 px-3 py-2 z-depth-0 waves-effect" type="button" onclick="fullscreen()">확대 / 축소</button>
                         </div>
                       </div>
@@ -198,17 +195,15 @@
                   </div>
                 </div>
               </div>
-              <table class="table align-items-center table-flush">
-                <thead>
-                  <tr>
-                    <th class="th-sm">학년/반/번호</th>
-                    <th class="th-sm">이름</th>
-                    <th class="th-sm">체크여부</th>
-                  </tr>
-                </thead>
-              </table>
               <div id="scrollTrack" class="table-responsive table-ss">
-               <table id="table" class="table align-items-center table-flush">
+                <table id="table" class="table align-items-center table-flush">
+                  <thead>
+                    <tr>
+                      <th class="th-sm">학년/반/번호</th>
+                      <th class="th-sm">이름</th>
+                      <th class="th-sm">체크여부</th>
+                    </tr>
+                  </thead>
                  <tbody>
                   <% rdata = data %> 
                   <% if (-1 < query.grade) rdata = rdata.filter((d) => d.grade == query.grade) %> 
@@ -218,9 +213,9 @@
                   <% rdata.forEach((d) => { %>
                     <tr>
                       <% if (d.grade < 1) { %>
-                        <td>선생님 #<%= d.number %></td>
+                        <td class="pl-1">선생님 #<%= d.number %></td>
                       <% } else { %>
-                        <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
+                        <td class="pl-1"><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
                       <% } %>
                       <td><%= d.name %></td>
                       <td>

@@ -29843,6 +29843,18 @@ html, body {
     width: 100%; 
     height: 100%; 
     position: fixed; 
-    top: 0; 
+    top: 0;
     left: 0; 
+}
+
+.refresh {
+    border: 2px solid #ffffffda;
+    border-radius: 50%;
+    padding: 3px;
+    font-size: 11px;
+    text-align: center;
+}
+
+th, td {
+    /* padding: 10px 0px !important; */
 }

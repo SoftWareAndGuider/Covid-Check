@@ -35,9 +35,14 @@ $(document).ready(function () {
   
   $('.dataTables_length').addClass('bs-select')
   $('.alert').alert()
-  setTimeout(() => {
-    window.location.reload()
-  }, 60000)
+  
+  let left = 60
+  setInterval(() => {
+    left--
+    document.getElementsByClassName('refresh')[0].innerText = left.toString().padStart(2, '0')
+    if (left === 0) window.location.reload()
+  }, 1000)
+  
   document.getElementById('scrollTrack').scroll(0, localStorage.getItem('scroll') || 0)
   document.getElementById('scrollTrack').addEventListener('scroll', () => {
     localStorage.setItem('scroll', document.getElementById('scrollTrack').scrollTop)
