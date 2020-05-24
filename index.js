@@ -12,6 +12,7 @@ const db = knex({
   connection: {
     host: 'localhost',
     user: 'covidcheck',
+    password: 'covidcheck1234',
     database: 'covidcheck'
   }
 })
