@@ -87,7 +87,7 @@ function apiHandle (req, res) {
     }
 
     case 'delete': {
-      db.select('*').where(body).from('checks').then((data) => {
+      db.select('*').where(body).from('checks').then(([data]) => {
         db.delete().where(body).from('checks').then(() => {
           res.send({ success: true, data })
         }).catch((reason) => res.send({ success: false, reason }))
