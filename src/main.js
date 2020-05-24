@@ -227,9 +227,27 @@ function reset () {
 }
 
 function add () {
+  Swal.fire({
+    title: '추가할 사용자의 종류를 정해주세요',
+    input: 'select',
+    inputOptions: {
+      student: '학생',
+      teacher: '선생님'
+    },
+    showCancelButton: true,
+    confirmButtonText: '다음',
+    cancelButtonText: '취소',
+  }).then(({ value: res }) => {
+    if (res === 'student') addStudent()
+    if (res === 'teacher') addTeacher()
+  })
+}
+
+function addStudent () {
   Swal.mixin({
     showCancelButton: true,
     confirmButtonText: '다음',
+    cancelButtonText: '취소',
     progressSteps: ['1', '2', '3', '4', '5']
   }).queue([
     {
@@ -248,7 +266,7 @@ function add () {
       text: 'ex) 19'
     },
     {
-      title: '추가할 학생의 이름 입력해주세요',
+      title: '추가할 학생의 이름을 입력해주세요',
       input: 'text',
       text: 'ex) 임태현'
     },
@@ -259,15 +277,13 @@ function add () {
     }
   ]).then((result) => {
     if (result.value) {
-      const answers = JSON.stringify(result.value)
-      console.log(result.value)
       Swal.fire({
         title: '입력하신 정보가 맞나요?',
-        html: `
-          입력하신 정보:
-          <pre><code>${answers}</code></pre>
-        `,
-        confirmButtonText: '맞아요!!'
+        html: '\
+          입력하신 정보: \
+          <pre><code>' + result.value.join(', ') + '</code></pre>\
+        ',
+        confirmButtonText: '네'
       }).then(() => {
         const req = new XMLHttpRequest()
         req.open('PUT', '/api')
@@ -283,10 +299,42 @@ function add () {
   })
 }
 
-function addStudent () {
-  
-}
-
 function addTeacher () {
-
+  Swal.mixin({
+    showCancelButton: true,
+    confirmButtonText: '다음',
+    cancelButtonText: '취소',
+    progressSteps: ['1', '2']
+  }).queue([
+    {
+      title: '추가할 선생님의 성함을 입력해주세요',
+      input: 'text',
+    },
+    {
+      title: '추가할 선생님의 ID를 입력해주세요',
+      input: 'number',
+      text: 'ex) 19200999'
+    }
+  ]).then((result) => {
+    if (result.value) {
+      Swal.fire({
+        title: '입력하신 정보가 맞나요?',
+        html: '\
+          입력하신 정보: \
+          <pre><code>' + result.value.join(', ') + '</code></pre>\
+        ',
+        confirmButtonText: '네'
+      }).then(() => {
+        const req = new XMLHttpRequest()
+        req.open('PUT', '/api')
+        req.setRequestHeader("Content-Type", "application/json");
+        req.send(JSON.stringify({
+          id: result.value[1], grade : 0, class: 0, number: result.value[1] - 19200000, name: result.value[0], process: "insert"
+        }))
+        req.onload = () => {
+          window.location.reload()
+        }
+      })
+    }
+  })
 }
