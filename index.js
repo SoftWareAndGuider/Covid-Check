@@ -19,7 +19,7 @@ const db = knex({
 
 
 // Handling
-app.use('/api', express.json({ limit: '500K' })) // 클라에서 데이터를 받을 수 있게
+app.use('/api', express.json({ limit: '500K' }))
 app.use('/src', express.static(path() + '/src/')) 
 
 app.get('/', (_, res) => res.redirect('/main'))
