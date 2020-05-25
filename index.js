@@ -172,7 +172,7 @@ function saveTable (cb) {
       const ments = ['체크 안함', '체크 완료', '발열 확인됨']
       rendered += ments[d.checked]
     })
-    save(path() + '/saves/' + filename, rendered, { encoding: 'utf-8' }, (err) => {
+    save(path() + '/saves/' + filename, '\ufeff' + rendered, { encoding: 'utf-8' }, (err) => {
       if (err) console.log(err)
       db.insert({ filename }).from('saves').then(cb)
     })
