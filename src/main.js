@@ -146,7 +146,7 @@ function exportTableToCsv(tableId, filename, cb) {
           csvString = csvString + '"' + columnData + '",';
       }
       csvString = csvString.substring(0, csvString.length - 1);
-      csvString = csvString + "\n";
+      csvString = csvString + "\r\n";
   }
   csvString = csvString.substring(0, csvString.length - 1);
 
