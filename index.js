@@ -156,7 +156,7 @@ setInterval(() => {
 }, 500)
 
 function saveTable (cb) {
-  const filename = '장곡중-발열체크-기록-' + new Date().toLocaleString('ko-KR').split(' ').join('-').split('/').join('.') + '.csv'
+  const filename = '장곡중-발열체크-기록-' + new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }).split(' ').join('-').split('/').join('.') + '.csv'
   let rendered = '학년,반,번호,이름,체크여부'
   db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
     data.forEach((d) => {
