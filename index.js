@@ -160,7 +160,7 @@ function saveTable (cb) {
   let rendered = '학년,반,번호,이름,체크여부'
   db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
     data.forEach((d) => {
-      rendered += '\n'
+      rendered += '\r\n'
       if (d.grade < 1) {
         rendered += '선생님,-,' + d.number + ','
       } else {
