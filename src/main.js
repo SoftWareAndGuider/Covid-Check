@@ -256,8 +256,8 @@ function addStudent () {
       text: 'ex) 3'
     },
     {
-      input: 'number',
       title: '추가할 학생의 반을 입력해주세요',
+      input: 'number',
       text: 'ex) 4'
     },
     {
@@ -285,15 +285,7 @@ function addStudent () {
         ',
         confirmButtonText: '네'
       }).then(() => {
-        const req = new XMLHttpRequest()
-        req.open('PUT', '/api')
-        req.setRequestHeader("Content-Type", "application/json");
-        req.send(JSON.stringify({
-          id: result.value[4], grade : result.value[1], class: result.value[2], number: result.value[3], name: result.value[4], process: "insert"
-        }))
-        req.onload = () => {
-          window.location.reload()
-        }
+        alert(result.value[0] + result.value[1] + result.value[2] + result.value[3] + result.value[4])
       })
     }
   })
