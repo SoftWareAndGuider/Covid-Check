@@ -1,62 +1,54 @@
-let grade, classs, table, fullsw = JSON.parse(localStorage.getItem('fullsw')) || false
-history.scrollRestoration = 'manual'
+// 전채 화면 여부
+let fullsw = JSON.parse(localStorage.getItem('fullsw')) || false
+history.scrollRestoration = 'manual' // 스크롤 복구 금지(크롬)
 
+// 관리자 모달 여/부, 새로고침 방지
 let admin = false
 
-function isIE() {
-  const ua = navigator.userAgent
-  const is_ie = ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1
-  return is_ie 
+// F5방지
+document.onkeydown = (ev) => {
+  if (ev.keyCode == 116) {
+    ev.preventDefault()
+    window.location.replace('/main')
+  }
 }
 
-if (isIE()) window.location.replace('/Alert')
-
+// 이 함수 내부는 보호됨
 $(document).ready(function () {
-  // table = $('#table').DataTable({
-  //   scrollY: '50vh',
-  //   paging: false,
-  //   order: [[ 1, 'asc' ], [ 0, 'asc' ]],
-  //   ajax: '/ajax/data',
-  //   colReorder: false,
-  //   processing: true,
-  //   ordering: false,
-  //   info: false,
-  //   searching: false,
-  //   responsive: true,
-  //   rowReorder: {
-  //       selector: 'td:nth-child(2)'
-  //   },
-  //   initComplete: () => {
-  //     document.getElementsByClassName('loading')[0].style.display = 'none'
-  //     document.getElementsByTagName('html')[0].style.overflow = 'auto'
-  //     document.getElementsByTagName('body')[0].style.overflow = 'auto'
-  //     document.getElementsByClassName('dataTables_scrollBody')[0].scroll(0, localStorage.getItem('scroll') || 0)
-  //   }
-  // })
+  // URL 알림
+  history.pushState('', '', '/주소외부공개금지(개인정보보호)');
 
-  $('.dataTables_length').addClass('bs-select')
-  
+  // 60초 마다 새로 고침
   let left = 60
   setInterval(() => {
     if (admin === false) {
       left--
-      if (left === 0) window.location.reload()
+      if (left === 0) window.location.replace('/main')
     } else {
       left = 60
     }
+
+    // 새로고침까지 얼마 남았는지 표시
     document.getElementsByClassName('refresh')[0].innerText = left.toString().padStart(2, '0')
   }, 1000)
   
+  // 이전에 스크롤 한 기록이 있으면 스크롤 했던 곳으로 되돌리기
   document.getElementById('scrollTrack').scroll(0, localStorage.getItem('scroll') || 0)
+
+  // 스크롤 기록 저장
   document.getElementById('scrollTrack').addEventListener('scroll', () => {
     localStorage.setItem('scroll', document.getElementById('scrollTrack').scrollTop)
   })
+
+  // 전체화면 여부 확인
   if (fullsw) {
+    // 전체화면
     document.getElementsByClassName('fulltarget')[0].classList.add('fullon')
     document.getElementById('scrollTrack').style.height = '100%'
     document.getElementsByTagName('html')[0].style.overflow = 'hidden'
     document.getElementsByTagName('body')[0].style.overflow = 'hidden'
   } else {
+    // 노말
     document.getElementById('scrollTrack').style.height = ''
     document.getElementsByClassName('fulltarget')[0].classList.remove('fullon')
     document.getElementsByTagName('html')[0].style.overflow = 'auto'
@@ -64,20 +56,7 @@ $(document).ready(function () {
   }
 })
 
-function gradeSelect (n) {
-  document.getElementById('gradeSelect').innerText = n + '학년'
-  grade = n
-}
-
-function classSelect (n) {
-  document.getElementById('classSelect').innerText = n + '반'
-  classs = n
-}
-
-function filter () {
-  table.search(grade + '학년 ' + classs + '반').draw()
-}
-
+// 발열 체크
 function check (id, ondo) {
   const req = new XMLHttpRequest()
   req.open('PUT', '/api')
@@ -90,6 +69,7 @@ function check (id, ondo) {
   }
 }
 
+// 발열 체크 해제
 function uncheck (id) {
   const req = new XMLHttpRequest()
   req.open('PUT', '/api')
@@ -102,6 +82,7 @@ function uncheck (id) {
   }
 }
 
+// 전체 화면
 function fullscreen () {
   if (fullsw) {
     fullsw = false
@@ -119,6 +100,7 @@ function fullscreen () {
   localStorage.setItem('fullsw', fullsw)
 }
 
+// 내보내기
 function exportTableToCsv(tableId, filename, cb) {
   if (filename == null || typeof filename == undefined)
       filename = tableId;
@@ -189,6 +171,7 @@ function exportTableToCsv(tableId, filename, cb) {
   cb()
 }
 
+// 초기화
 function reset () {
   swal.fire({
     title: '잠시만요! 이 버튼은...',
@@ -226,6 +209,7 @@ function reset () {
   });
 }
 
+// 사용자 추가
 function add () {
   Swal.fire({
     title: '추가할 사용자의 종류를 정해주세요',
@@ -243,6 +227,7 @@ function add () {
   })
 }
 
+// 학생 추가
 function addStudent () {
   Swal.mixin({
     showCancelButton: true,
@@ -291,6 +276,7 @@ function addStudent () {
   })
 }
 
+// 선생님 추가
 function addTeacher () {
   Swal.mixin({
     showCancelButton: true,

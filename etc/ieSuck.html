@@ -21,11 +21,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script>
+      // IE확인 함수
       function isIE() {
         const ua = navigator.userAgent;
         const is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
         return is_ie; 
       }
+
+      // IE가 아니면 메인으로 이동
       if (!isIE()) window.location.replace('/main')
     </script>
 
@@ -53,13 +56,13 @@
         <div class="jumbotron text-center">
           <h1 style="font-size: 150px;"><i class="fab fa-internet-explorer"></i></h1>
           <br />
-          <h3 style="color:#ee3131">저런 IE를 사용중이시네요.</h3>
+          <h3 style="color:#ee3131">저런 인터넷 익스플로러를 사용중이시네요.</h3>
           <h5>
-            죄송합니다만, IE는 저의와 함께하실수 없습니다<br />
-            아래 버튼을 이용하여 크롬 브라우져를 설치해주세요
+            지원되지 않는 브라우저가 감지되었습니다<br />
+            아래 버튼을 이용하여 크롬 브라우저를 설치해주세요
           </h5>
           <br />
-          <button type="button" class="btn btn-primary btn-lg btn-block" onClick="location.href='https://www.google.com/intl/ko/chrome/'">크롬 브라우져 다운로드</button>
+          <a class="btn btn-primary btn-lg btn-block" href="https://www.google.com/intl/ko/chrome/">크롬 브라우져 다운로드</a>
         </div>
       </div>
   </body>

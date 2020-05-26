@@ -24,8 +24,11 @@
     }
     if (isIE()) window.location.replace('/alert')
   </script>
+
+  <%# 내보내기일경우만 실행됨 %>
   <% if (query.export == 1) { %>
     <script>
+      // 페이지가 다 로딩되면, 저장하고 다시 로딩
       window.onload = () => {
         exportTableToCsv('table', '장곡중-발열체크-조회결과', () => {
           let params = (new URL(document.location)).searchParams;
@@ -37,6 +40,8 @@
   <% } %>
  </head>
  <body>
+
+  <!-- 기록 모달 -->
   <div class="modal fade" id="history" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-fluid h-100 p-5 m-0 w-100 mw-100">
       <div class="modal-content h-100 w-100">
@@ -52,21 +57,10 @@
       </div>
     </div>
   </div>
-  <!-- <div class="loading">
-    <div class="loading-jumbo jumbotron text-center">
-      <div class="spinner-grow text-info" role="status"></div>
-      <br />
-      <h4>
-        서버에서 데이터를 가져오고있습니다. 잠시만 기다려주세요
-      </h4>
-    </div>
-  </div> -->
-  <!-- Frame Modal Bottom -->
+
+  <!-- 관리자 모달 -->
   <div class="modal fade top" id="frameModalBottom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="false">
-
-    <!-- Add class .modal-frame and then add class .modal-bottom (or other classes from list above) to set a position to the modal -->
     <div class="modal-dialog modal-frame modal-top" role="document">
-
       <div class="modal-content">
         <div class="modal-body">
           <div class="row d-flex justify-content-center align-items-center">
@@ -79,22 +73,34 @@
       </div>
     </div>
   </div>
-  <!-- Frame Modal Bottom -->
+
+  <!-- 메인 -->
   <div class="container">
     <div class="main-content" id="panel">
+
+      <!-- 머리부분 (제목, 통계) -->
       <div class="header peach-gradient pb-5">
         <div class="container-fluid">
           <div class="header-body">
             <div class="row align-items-center py-4">
+
+              <!-- 왼쪽, 제목 -->
               <div class="col-lg-6 col-7">
                 <h1 class="text-white">장곡중학교 발열 체크</h1>
               </div>
+
+              <!-- 오른쪽, 버튼들 -->
               <div class="col-lg-6 col-5 text-right">
                 <button class="btn text-white" data-toggle="modal" data-target="#frameModalBottom" onclick="admin = true">관리자</button>
-                <button onclick="window.location.reload()" class="btn text-white" id="refresh">새로고침 <span class="refresh">60</span></button>
+                <button onclick="window.location.replace('/main')" class="btn text-white" id="refresh">새로고침 <span class="refresh">60</span></button>
               </div>
+
             </div>
+
+            <!-- 통계 -->
             <div class="row mb-3">
+
+              <!-- 1. 발열 대상자 -->
               <div class="col-xl-3 col-md-6">
                 <div class="card card-stats">
                   <div class="card-body">
@@ -112,6 +118,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- 2. 미검사자 -->
               <div class="col-xl-3 col-md-6">
                 <div class="card card-stats">
                   <div class="card-body">
@@ -132,6 +140,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- 3. 검사 완료자 -->
               <div class="col-xl-3 col-md-6">
                 <div class="card card-stats">
                   <div class="card-body">
@@ -152,6 +162,8 @@
                   </div>
                 </div>
               </div>
+
+              <!-- 4. 발열 확인됨 -->
               <div class="col-xl-3 col-md-6">
                 <div class="card card-stats">
                   <div class="card-body">
@@ -171,22 +183,35 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
       </div>
+
+      <!-- 몸통 부분(리스트, 정보들) -->
       <div class="container-fluid mt--6">
         <div class="row">
+
+          <!-- 왼쪽, 전체 리스트 -->
           <div class="col-xl-8">
             <div class="card fulltarget">
+
+              <!-- 상단 컨트롤러 -->
               <div class="card-header border-0">
                 <div class="row align-items-center">
+
+                  <!-- 테이블 제목 -->
                   <div class="col-md">
                     <h3 class="mb-0">전체 리스트</h3>
                   </div>
+
+                  <!-- 조회시스템 -->
                   <div class="col-md-8 text-right">
                     <form action="/main" method="get">
                       <div class="input-group">
+
+                        <!-- 학년 -->
                         <select name="grade" id="grade" class="browser-default custom-select">
                           <option value="-1">전체</option>
                           <option value="0" <%- query.grade == 0 ? 'selected' : '' %>>선생님</option>
@@ -194,13 +219,19 @@
                           <option value="2" <%- query.grade == 2 ? 'selected' : '' %>>2학년</option>
                           <option value="3" <%- query.grade == 3 ? 'selected' : '' %>>3학년</option>
                         </select>
+
+                        <!-- 반 -->
                         <select name="class" id="class" class="browser-default custom-select">
                           <option value="-1">전체</option>
                           <% for (let i = 1; i < 13; i++) { %>
                             <option value="<%= i %>" <%- query.class == i ? 'selected' : '' %>><%= i %>반</option>
                           <% } %>
                         </select>
+
+                        <!-- 내보내기 여부(0 or 1), 여러번 내보내지 않도록 0으로 고정 -->
                         <input type="hidden" name="export" value="0">
+
+                        <!-- 오른쪽 버튼 3개 -->
                         <div class="input-group-append">
                           <button class="btn btn-md primary-color text-white m-0 px-3 py-2 z-depth-0 waves-effect" type="submit">조회</button>
                           <button class="btn btn-md success-color text-white m-0 px-3 py-2 z-depth-0 waves-effect" type="submit" onclick="document.getElementsByName('export')[0].value = 1">내보내기</button>
@@ -211,8 +242,14 @@
                   </div>
                 </div>
               </div>
+
+              <!-- 스크롤 시작 -->
               <div id="scrollTrack" class="table-responsive table-ss">
+
+                <!-- 테이블 시작 -->
                 <table id="table" class="table align-items-center table-flush">
+
+                  <!-- 테이블 머리 -->
                   <thead>
                     <tr>
                       <th class="th-sm">학년/반/번호</th>
@@ -220,36 +257,49 @@
                       <th class="th-sm">체크여부</th>
                     </tr>
                   </thead>
-                 <tbody>
-                  <% rdata = data %> 
-                  <% if (-1 < query.grade) rdata = rdata.filter((d) => d.grade == query.grade) %> 
-                  <% if (-1 < query.class) rdata = rdata.filter((d) => d.class == query.class) %> 
-                  <% if (-1 < query.number) rdata = rdata.filter((d) => d.number == query.number) %> 
-                  <% if (-1 < query.checked) rdata = rdata.filter((d) => d.checked == query.checked) %> 
-                  <% rdata.forEach((d) => { %>
-                    <tr>
-                      <% if (d.grade < 1) { %>
-                        <td>선생님 #<%= d.number %></td>
-                      <% } else { %>
-                        <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
-                      <% } %>
-                      <td><%= d.name %></td>
-                      <td>
-                        <% if (d.checked === 1) { %>
-                          <i class="fas fa-check-circle text-success"></i> 체크 완료 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck('<%= d.id %>')">체크 취소</button>
-                        <% } else if (d.checked === 0) { %>
-                          <i class="far fa-circle"></i> 체크 안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check('<%= d.id %>')">체크 하기</button>  <button class="m-0 ml-2 p-1 btn btn-danger" onclick="check('<%= d.id %>', true)">발열자로 체크하기</button>
-                        <% } else if (d.checked === 2) { %>
-                          <i class="fas fa-exclamation-circle text-danger"></i> 발열 확인 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck('<%= d.id %>')">체크 취소</button>
+
+                  <!-- 테이블 몸통 -->
+                  <tbody>
+
+                    <%# 조회 시작 %>
+                    <% rdata = data %> 
+                    <% if (-1 < query.grade) rdata = rdata.filter((d) => d.grade == query.grade) %> 
+                    <% if (-1 < query.class) rdata = rdata.filter((d) => d.class == query.class) %> 
+                    <% if (-1 < query.number) rdata = rdata.filter((d) => d.number == query.number) %> 
+                    <% if (-1 < query.checked) rdata = rdata.filter((d) => d.checked == query.checked) %>
+                    <%# 조회 끝 %>
+
+                    <%# 렌더링 %>
+                    <% rdata.forEach((d) => { %>
+                      <tr>
+                        <% if (d.grade < 1) { %>
+                          <td>선생님 #<%= d.number %></td>
+                        <% } else { %>
+                          <td><%= d.grade %>학년 <%= d.class %>반 <%= d.number %>번</td>
                         <% } %>
-                      </td>
-                    </tr>
-                  <% }) %>
-                </tbody>
-               </table>
+                        <td><%= d.name %></td>
+                        <td>
+                          <% if (d.checked === 1) { %>
+                            <i class="fas fa-check-circle text-success"></i> 체크 완료 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck('<%= d.id %>')">체크 취소</button>
+                          <% } else if (d.checked === 0) { %>
+                            <i class="far fa-circle"></i> 체크 안함 <button class="m-0 ml-2 p-1 btn btn-success" onclick="check('<%= d.id %>')">체크 하기</button>  <button class="m-0 ml-2 p-1 btn btn-danger" onclick="check('<%= d.id %>', true)">발열자로 체크하기</button>
+                          <% } else if (d.checked === 2) { %>
+                            <i class="fas fa-exclamation-circle text-danger"></i> 발열 확인 <button class="m-0 ml-2 p-1 btn btn-secondary text-white" onclick="uncheck('<%= d.id %>')">체크 취소</button>
+                          <% } %>
+                        </td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+                <!-- 테이블 끝 -->
+
               </div>
+              <!-- 스크롤 끝 -->
+
             </div>
           </div>
+
+          <!-- 오른쪽, 정보들 -->
           <div class="col-xl-4">
             <div class="card">
               <div class="card-header bg-transparent">
@@ -260,10 +310,12 @@
                 </div>
               </div>
 
+              <%# 조회 시작 %>
               <% const stats0 = data.filter((d) => d.grade === 0) %>
               <% const stats1 = data.filter((d) => d.grade === 1) %>
               <% const stats2 = data.filter((d) => d.grade === 2) %>
               <% const stats3 = data.filter((d) => d.grade === 3) %>
+              <%# 조회 끝 %>
 
               <div class="card-body">
                 <h3><strong>선생님</strong></h3>
@@ -305,15 +357,18 @@
           </div>
         </div>
 
-        <!-- Footer -->
+        <!-- 발 부분 -->
         <footer class="footer pt-0">
           <div class=" align-items-center justify-content-lg-between">
             <div class="copyright text-muted">
+              <!-- 문의 -->
               웹페이지에 문제가 발생하면 "3-3 박민혁 혹은 3-4 임태현"을 불러주세요 (맞춤법/오타 지적은 환영입니다)<br />
               이 웹 페이지에서 해결할 수 없는 문제(정보오류)가 발생하면 "3-3 박민혁 혹은 3-4 임태현, 배재현"을 불러주세요<br /><br />
 
+              <!-- 저작권 -->
               &copy; 모든 저작권은 (칠곡) 장곡중학교와 Software And Guiders(SWAG, 장곡중 소프트웨어 동아리)에 있으며, 무단 복제 및 2차 배포를 금합니다<br /><br />
 
+              <!-- 크레딧 -->
               <span data-toggle="tooltip" data-placement="top" title="서버 구축 부분">서버 메인 프로그래밍</span>: 3-3 박민혁<br />
               <span data-toggle="tooltip" data-placement="top" title="웹 디자인 부분">서버 서브 프로그래밍</span>: 3-4 임태현<br />
               <span data-toggle="tooltip" data-placement="top" title="측정 및 관리자 부분">클라이언트 메인 프로그래밍</span>: 3-4 배재현<br />
@@ -323,6 +378,8 @@
       </div>
     </div>
   </div>
+
+  <!-- 끝 -->
   <script src="/src/main.js"></script>
  </body>
 </html>
