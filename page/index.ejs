@@ -323,7 +323,8 @@
                   전체: <%= stats0.length %>명 /
                   완료: <%= stats0.filter((d) => d.checked > 0).length %>명<br />
                   정상: <%= stats0.filter((d) => d.checked === 1).length %>명 /
-                  발열: <%= stats0.filter((d) => d.checked === 2).length %>명
+                  발열: <%= stats0.filter((d) => d.checked === 2).length %>명 /<br />
+                  검사 안함: <%= stats0.length - stats0.filter((d) => d.checked > 0).length %>명
                 </h4>
               </div>
               <div class="card-body">
@@ -332,7 +333,8 @@
                   전체: <%= stats1.length %>명 /
                   완료: <%= stats1.filter((d) => d.checked > 0).length %>명<br />
                   정상: <%= stats1.filter((d) => d.checked === 1).length %>명 /
-                  발열: <%= stats1.filter((d) => d.checked === 2).length %>명
+                  발열: <%= stats1.filter((d) => d.checked === 2).length %>명 /<br />
+                  검사 안함: <%= stats1.length - stats1.filter((d) => d.checked > 0).length %>명
                 </h4>
               </div>
               <div class="card-body">
@@ -341,7 +343,8 @@
                   전체: <%= stats2.length %>명 /
                   완료: <%= stats2.filter((d) => d.checked > 0).length %>명<br />
                   정상: <%= stats2.filter((d) => d.checked === 1).length %>명 /
-                  발열: <%= stats2.filter((d) => d.checked === 2).length %>명
+                  발열: <%= stats2.filter((d) => d.checked === 2).length %>명 /<br />
+                  검사 안함: <%= stats2.length - stats2.filter((d) => d.checked > 0).length %>명
                 </h4>
               </div>
               <div class="card-body">
@@ -350,7 +353,8 @@
                   전체: <%= stats3.length %>명 /
                   완료: <%= stats3.filter((d) => d.checked > 0).length %>명<br />
                   정상: <%= stats3.filter((d) => d.checked === 1).length %>명 /
-                  발열: <%= stats3.filter((d) => d.checked === 2).length %>명
+                  발열: <%= stats3.filter((d) => d.checked === 2).length %>명 /<br />
+                  검사 안함: <%= stats3.length - stats3.filter((d) => d.checked > 0).length %>명
                 </h4>
               </div>
             </div>
