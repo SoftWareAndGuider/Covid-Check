@@ -32,6 +32,7 @@ app.use('/saves', express.static(path() + '/saves/'))// 초기화 기록
 // 페이지 요청 받기
 app.get('/', (_, res) => res.redirect('/main'))
 app.get('/alert', (_, res) => res.sendFile(path() + '/etc/ieSuck.html'))
+app.get('/rights', (_, res) => res.sendFile(path() + '/etc/copyrights.html'))
 app.get('/main', (req, res) => {
   db.select('*').orderByRaw('grade, class, number, id').from('checks').then((data) => {
     ejs(path() + '/page/index.ejs', { data, query: req.query || {} }, (err, str) => {
