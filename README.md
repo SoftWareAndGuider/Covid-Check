@@ -1,6 +1,8 @@
 # Covid-Check
 코로나 바이러스 확산으로 인한 장곡중 발열체크&amp;조회 시스템
 
+이 프로그램의 클라이언트는 [여기](https://github.com/softwareandguider/covid-check-client) 에서 확인할 수 있다
+
 ## 개발자용 문서
 ### 디렉터리 트리
 `/index.js` : 서버측에서 동작하는 JS\
