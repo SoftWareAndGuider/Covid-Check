@@ -158,7 +158,7 @@ let resetProtect = false // 충돌방지
 setInterval(() => {
   let now = new Date()
   if (now.getHours === 0 && now.getMinutes === 0 && now.getSeconds === 0) {
-    
+
     if (resetProtect) return                         // 충돌방지
     resetProtect = true                              // 충돌방지
     setTimeout(() => { resetProtect = false }, 3000) // 충돌방지

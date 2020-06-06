@@ -1,21 +1,19 @@
-MIT License
+아래의 조항을 만족하는 경우에 한하여 Covid-Check, 장곡중학교 발열 체크(이하, 이 프로그램)의 아이디어 혹은 코드의 사용을 허락한다.
 
-Copyright (c) 2020 Janggok SWAG
+  1. 이 프로그램은 원 저작자가 허용한 경우를 제외하고 어떠한 경우에도 상업적, 영리적으로 이용될 수 없다.
+  2. 이 프로그램의 소스중 일부 혹은 전체를 사용한 경우 상업적, 영리적으로 이용될 수 없다.
+  3. 이 프로그램의 아이디어를 이용한 2차 저작물 또한 상업적, 영리적으로 이용될 수 없다.
+  4. 이 프로그램을 수정 및 2차 배포 할 경우 원 저작자 표기 방침을 따라야 한다.
+  5. 이 프로그램의 아이디어를 이용한 2차 저작물을 제작 및 2차 배포 할경우, 또한 원 저작자 표기 방침을 따라야 한다.
+  6. 이 프로그램 혹은 이 프로그램의 수정본을 사용할 때에는 SSL암호화 등의 보안된 환경에서 실행되어야 한다.
+  7. 이 프로그램의 수정본을 제작해 배포할 경우 추가적인 조항을 추가 할 수 있다. (단 기존의 조항을 수정, 삭제 혹은 기존의 조항에 반하는 내용의 조항 추가는 금한다.)
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+이 문서의 조항들 중 하나라도 어기는 프로그램 혹은 사용이 발견될 경우 원 저작자는 그 프로그램의 개발 또는 사용에 개입하거나 개발을 중단, 사용 금지를 할 수 있다.
+이 문서의 조항을 어기고 이 프로그램 또는 이 프로그램의 수정본, 이 프로그램의 아이디어를 이용한 2차 저작물을 통해 금 10원 이상의 수입을 낸경우, 이를 통하여 얻은 전체 수입의 120%를 원 저작자에게 지불 한다. (단 사용자들의 자발적인 후원은 수입으로 간주하지 않는다.)
+이 프로그램의 수정, 사용시 이 문서의 조항에 모두 동의한 것으로 간주한다.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+<원 저작자 표기 방침>
+  1. 원 저작권자 (박민혁, 임태현, 배재현)와 개발그룹((칠곡) 장곡중학교/장곡중 소프트웨어 동아리/SWAG)를 누구나 볼 수 있는 위치에 표기해야 한다.
+  2. 개발 그룹인 장곡중학교를 표시할 때에는 접두사로 (칠곡)을 표기해야 한다.
+  3. 최소한의 가독성이 보장된 8pt 이상의 글자 크기로 표기해야 한다.
+  4. Noto Sans, 나눔고딕 혹은 기타 가독성이 좋은 폰트를 사용하여 표기해야 한다.

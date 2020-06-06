@@ -31,7 +31,7 @@ $(document).ready(function () {
     // 새로고침까지 얼마 남았는지 표시
     document.getElementsByClassName('refresh')[0].innerText = left.toString().padStart(2, '0')
   }, 1000)
-  
+
   // 이전에 스크롤 한 기록이 있으면 스크롤 했던 곳으로 되돌리기
   document.getElementById('scrollTrack').scroll(0, localStorage.getItem('scroll') || 0)
 
@@ -175,7 +175,7 @@ function exportTableToCsv(tableId, filename, cb) {
 function reset () {
   swal.fire({
     title: '잠시만요! 이 버튼은...',
-    html: '- 모든 사용자의 발열체크 여부를 전부 초기화시켜요<br />' + 
+    html: '- 모든 사용자의 발열체크 여부를 전부 초기화시켜요<br />' +
           '- 현재 내용이 읽기 전용으로 바뀌어 기록에 저장되요<br />' +
           '- 기록들은 관리자모드에서 볼 수 있어요<br />' +
           '- 사용자의 나머지 정보들은 작업 후에도 유지되요<br />' +

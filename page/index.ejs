@@ -20,7 +20,7 @@
     function isIE() { // IE는 사회악입니다.
       const ua = navigator.userAgent;
       const is_ie = ua.indexOf("MSIE ") > -1 || ua.indexOf("Trident/") > -1;
-      return is_ie; 
+      return is_ie;
     }
     if (isIE()) window.location.replace('/alert')
   </script>
@@ -262,10 +262,10 @@
                   <tbody>
 
                     <%# 조회 시작 %>
-                    <% rdata = data %> 
-                    <% if (-1 < query.grade) rdata = rdata.filter((d) => d.grade == query.grade) %> 
-                    <% if (-1 < query.class) rdata = rdata.filter((d) => d.class == query.class) %> 
-                    <% if (-1 < query.number) rdata = rdata.filter((d) => d.number == query.number) %> 
+                    <% rdata = data %>
+                    <% if (-1 < query.grade) rdata = rdata.filter((d) => d.grade == query.grade) %>
+                    <% if (-1 < query.class) rdata = rdata.filter((d) => d.class == query.class) %>
+                    <% if (-1 < query.number) rdata = rdata.filter((d) => d.number == query.number) %>
                     <% if (-1 < query.checked) rdata = rdata.filter((d) => d.checked == query.checked) %>
                     <%# 조회 끝 %>
 
