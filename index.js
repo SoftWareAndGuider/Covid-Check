@@ -17,7 +17,7 @@ const db = knex({
     host: 'localhost',
     user: 'covidcheck',
     password: 'covidcheck1234',
-    database: 'covidcheck'
+    database: 'covidcheck-bdnms'
   }
 })
 
