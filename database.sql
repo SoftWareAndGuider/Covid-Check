@@ -1,8 +1,8 @@
 -- create user 'covidcheck'@localhost identified by 'covidcheck1234';
 
-create schema if not exists 'covidcheck-bdnms';
-use 'covidcheck-bdnms';
-grant all privileges on 'covidcheck-bdnms'.* to 'covidcheck'@localhost;
+create schema if not exists covidcheck_bdnms;
+use covidcheck_bdnms;
+grant all privileges on covidcheck_bdnms.* to 'covidcheck'@localhost;
 
 create table if not exists checks
 (
