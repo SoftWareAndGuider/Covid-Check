@@ -6,6 +6,7 @@ const { writeFile: save, mkdirSync: init, existsSync: exist } = require('fs')
 const { renderFile: ejs } = require('ejs')
 const { resolve: path } = require('path')
 
+const schedule = require('node-schedule')
 const knex = require('knex')
 const express = require('express')
 
@@ -155,21 +156,13 @@ function apiHandle (req, res) {
 let resetProtect = false // 충돌방지
 
 // 0.5초 간격으로 체크해서 오전 12시마다 저장
-setInterval(() => {
-  let now = new Date()
-  if (now.getHours === 0 && now.getMinutes === 0 && now.getSeconds === 0) {
-
-    if (resetProtect) return                         // 충돌방지
-    resetProtect = true                              // 충돌방지
-    setTimeout(() => { resetProtect = false }, 3000) // 충돌방지
-
-    saveTable(() => {
-      db.update({ checked: 0 }).from('checks').then(() => {
-        res.send({ success: true })
-      })
+schedule.scheduleJob('0 0 * * *', function(){
+  saveTable(() => {
+    db.update({ checked: 0 }).from('checks').then(() => {
+      res.send({ success: true })
     })
-  }
-}, 500)
+  })
+})
 
 // 기록 저장
 function saveTable (cb) {
